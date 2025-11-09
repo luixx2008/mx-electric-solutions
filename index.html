@@ -251,10 +251,27 @@
         }
         
         .service-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: var(--neon-green);
-        }
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+
+.service-icon img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid var(--neon-aqua);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon img {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.6);
+}
         
         .service-card h3 {
             margin-bottom: 15px;
