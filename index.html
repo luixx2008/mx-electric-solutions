@@ -621,6 +621,139 @@
                 margin-top: 10px;
             }
         }
+        /* Estilos para la galería de proyectos */
+.project-gallery {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    background: #1a1a1a;
+}
+
+.gallery-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.gallery-track {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.gallery-image:hover {
+    transform: scale(1.02);
+}
+
+.gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 243, 255, 0.7);
+    color: var(--dark-bg);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.gallery-nav:hover {
+    background: var(--neon-aqua);
+    box-shadow: 0 0 15px var(--neon-aqua);
+}
+
+.gallery-prev {
+    left: 10px;
+}
+
+.gallery-next {
+    right: 10px;
+}
+
+/* Lightbox */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-content {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border: 2px solid var(--neon-aqua);
+    box-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
+    border-radius: 10px;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    z-index: 1001;
+}
+
+.lightbox-close:hover {
+    color: var(--neon-aqua);
+}
+
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 243, 255, 0.7);
+    color: var(--dark-bg);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.lightbox-nav:hover {
+    background: var(--neon-aqua);
+}
+
+.lightbox-prev {
+    left: 30px;
+}
+
+.lightbox-next {
+    right: 30px;
+                                              }
     </style>
 </head>
 <body>
@@ -682,6 +815,25 @@
                 </div>
                 <h3>Repair & Maintenance</h3>
                 <p>24/7 emergency electrical repairs and preventive maintenance programs to keep your systems running safely.</p>
+            </div>
+            <div class="project-card">
+    <div class="project-gallery">
+        <div class="gallery-container">
+            <div class="gallery-track">
+                <!-- Agrega aquí todas las imágenes de este proyecto -->
+                <img src="gym1.jpg" alt="Project image 1" class="gallery-image">
+                <img src="gym2.jpg" alt="Project image 2" class="gallery-image">
+                <img src="gym3.jpg" alt="Project image 3" class="gallery-image">
+                <img src="proyecto1-4.jpg" alt="Project image 4" class="gallery-image">
+            </div>
+        </div>
+        <button class="gallery-nav gallery-prev">&#10094;</button>
+        <button class="gallery-nav gallery-next">&#10095;</button>
+    </div>
+    <div class="project-info">
+        <h3>Residential Installation</h3>
+        <p>Complete electrical installation in luxury residence with home automation system integration.</p>
+    </div>
             </div>
             <div class="service-card">
                 <div class="service-icon">
@@ -978,6 +1130,118 @@
             alert('Thank you for your request! We will contact you shortly.');
             this.reset();
         });
+        // Galería y Lightbox
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar todas las galerías
+    initGalleries();
+    
+    // Lightbox
+    initLightbox();
+});
+
+function initGalleries() {
+    document.querySelectorAll('.project-gallery').forEach(gallery => {
+        const track = gallery.querySelector('.gallery-track');
+        const images = gallery.querySelectorAll('.gallery-image');
+        const prevBtn = gallery.querySelector('.gallery-prev');
+        const nextBtn = gallery.querySelector('.gallery-next');
+        
+        let currentIndex = 0;
+        const totalImages = images.length;
+        
+        // Configurar el ancho del track
+        track.style.width = `${totalImages * 100}%`;
+        
+        // Navegación
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalImages - 1;
+            updateGallery();
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex < totalImages - 1) ? currentIndex + 1 : 0;
+            updateGallery();
+        });
+        
+        function updateGallery() {
+            const translateX = -currentIndex * (100 / totalImages);
+            track.style.transform = `translateX(${translateX}%)`;
+        }
+        
+        // Inicializar
+        updateGallery();
+    });
+}
+
+function initLightbox() {
+    const lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.innerHTML = `
+        <button class="lightbox-close">&times;</button>
+        <button class="lightbox-nav lightbox-prev">&#10094;</button>
+        <img class="lightbox-content">
+        <button class="lightbox-nav lightbox-next">&#10095;</button>
+    `;
+    document.body.appendChild(lightbox);
+    
+    let currentLightboxIndex = 0;
+    let currentLightboxImages = [];
+    
+    // Abrir lightbox
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('gallery-image')) {
+            const gallery = e.target.closest('.project-gallery');
+            const images = Array.from(gallery.querySelectorAll('.gallery-image'));
+            currentLightboxImages = images;
+            currentLightboxIndex = images.indexOf(e.target);
+            
+            openLightbox();
+        }
+    });
+    
+    // Cerrar lightbox
+    lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) closeLightbox();
+    });
+    
+    // Navegación lightbox
+    lightbox.querySelector('.lightbox-prev').addEventListener('click', () => {
+        currentLightboxIndex = (currentLightboxIndex > 0) ? currentLightboxIndex - 1 : currentLightboxImages.length - 1;
+        updateLightbox();
+    });
+    
+    lightbox.querySelector('.lightbox-next').addEventListener('click', () => {
+        currentLightboxIndex = (currentLightboxIndex < currentLightboxImages.length - 1) ? currentLightboxIndex + 1 : 0;
+        updateLightbox();
+    });
+    
+    // Navegación con teclado
+    document.addEventListener('keydown', function(e) {
+        if (lightbox.classList.contains('active')) {
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') lightbox.querySelector('.lightbox-prev').click();
+            if (e.key === 'ArrowRight') lightbox.querySelector('.lightbox-next').click();
+        }
+    });
+    
+    function openLightbox() {
+        updateLightbox();
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+    
+    function updateLightbox() {
+        const lightboxImg = lightbox.querySelector('.lightbox-content');
+        lightboxImg.src = currentLightboxImages[currentLightboxIndex].src;
+        lightboxImg.alt = currentLightboxImages[currentLightboxIndex].alt;
+    }
+        }
     </script>
 </body>
 </html>
