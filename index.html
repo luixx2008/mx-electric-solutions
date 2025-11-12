@@ -775,7 +775,7 @@
     <!-- Header -->
     <header>
         <div class="logo-container">
-            <img src="banner.jpg" alt="Mx Electric Solutions" class="logo-image">
+            <img src="logo.png" alt="Mx Electric Solutions" class="logo-image">
             <div class="title-container">
                 <h1>MX Electric Solution!</h1>
             </div>
@@ -792,7 +792,7 @@
         </nav>
         <div class="contact-header">
             <i class="fas fa-phone"></i>
-            <span>(555) 123-4567</span>
+            <span>(512) 587-2169</span>
         </div>
     </header>
     
@@ -872,50 +872,43 @@
         <h2 class="section-title">Our Projects</h2>
         <div class="gallery">
 
-            
-            <div class="project-card">
-    <div class="project-gallery">
-        <div class="gallery-container">
-            <div class="gallery-track">
-                <!-- Agrega aquí todas las imágenes de este proyecto -->
-                <img src="su1.jpg" alt="Project image 1" class="gallery-image">
-                <img src="su2.jpg" alt="Project image 2" class="gallery-image">
-                <img src="su3.jpg" alt="Project image 3" class="gallery-image">
-                <img src="su4.jpg" alt="Project image 4" class="gallery-image">
-                <img src="su5.jpg" alt="Project image 5" class="gallery-image">
-                <img src="su6.jpg" alt="Project image 6" class="gallery-image">
-                <img src="su7.jpg" alt="Project image 7" class="gallery-image">
-                
+                    <div class="project-card">
+            <div class="project-gallery">
+                <div class="gallery-container">
+                    <div class="gallery-track">
+                        <img src="su1.jpg" alt="Project image 1" class="gallery-image">
+                        <img src="su2.jpg" alt="Project image 2" class="gallery-image">
+                        <img src="su3.jpg" alt="Project image 3" class="gallery-image">
+                        <img src="su4.jpg" alt="Project image 4" class="gallery-image">
+                        <img src="su5.jpg" alt="Project image 5" class="gallery-image">
+                        <img src="su6.jpg" alt="Project image 6" class="gallery-image">
+                        <img src="su7.jpg" alt="Project image 7" class="gallery-image">
+                    </div>
+                </div>
+                <button class="gallery-nav gallery-prev">&#10094;</button>
+                <button class="gallery-nav gallery-next">&#10095;</button>
+            </div>
+            <div class="project-info">
+                <h3>Sistem underground 800 AMPS</h3>
             </div>
         </div>
-        <button class="gallery-nav gallery-prev">&#10094;</button>
-        <button class="gallery-nav gallery-next">&#10095;</button>
-    </div>
-    <div class="project-info">
-        <h3>Sistem underground 800 AMPS</h3>
-     <!-- <p>Complete electrical installation in a GYM from lights.</p> -->
-    </div>
+        
+        <div class="project-card">
+            <div class="project-gallery">
+                <div class="gallery-container">
+                    <div class="gallery-track">
+                        <img src="gym1.jpg" alt="Project image 1" class="gallery-image">
+                        <img src="gym2.jpg" alt="Project image 2" class="gallery-image">
+                        <img src="gym3.jpg" alt="Project image 3" class="gallery-image">
+                    </div>
+                </div>
+                <button class="gallery-nav gallery-prev">&#10094;</button>
+                <button class="gallery-nav gallery-next">&#10095;</button>
             </div>
-
-            <div class="project-card">
-    <div class="project-gallery">
-        <div class="gallery-container">
-            <div class="gallery-track">
-                <!-- Agrega aquí todas las imágenes de este proyecto -->
-                <img src="gym1.jpg" alt="Project image 1" class="gallery-image">
-                <img src="gym2.jpg" alt="Project image 2" class="gallery-image">
-                <img src="gym3.jpg" alt="Project image 3" class="gallery-image">
-                
+            <div class="project-info">
+                <h3>GYM lights Installation</h3>
             </div>
         </div>
-        <button class="gallery-nav gallery-prev">&#10094;</button>
-        <button class="gallery-nav gallery-next">&#10095;</button>
-    </div>
-    <div class="project-info">
-        <h3>GYM lights Installation</h3>
-     <!-- <p>Complete electrical installation in a GYM from lights.</p> -->
-    </div>
-            </div>
 
 
             
@@ -1038,7 +1031,7 @@
                 <div class="contact-details">
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>123 Electric Avenue, Suite 100, Dallas, TX 75201</span>
+                        <span>1034 Clayton ln #704 apt Austin TX.</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-phone"></i>
@@ -1141,66 +1134,37 @@
     
     <script>
         // Efecto parallax para los hexágonos del fondo
-        document.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.hexagon');
-            
-            parallaxElements.forEach(function(element, index) {
-                const speed = 0.1 + (index * 0.05); // Velocidad diferente para cada hexágono
-                const yPos = -(scrolled * speed);
-                element.style.transform = `translateY(${yPos}px) rotate(${scrolled * 0.02}deg)`;
-            });
-        });
-        
-        // Animación suave para los enlaces de navegación
-        document.querySelectorAll('nav a, .cta-button').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                if (this.getAttribute('href').startsWith('#')) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-            });
-        });
-        
-        // Efecto de aparición para las tarjetas de proyectos
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-        
-        // Aplicar a las tarjetas de proyectos y servicios
-        document.querySelectorAll('.project-card, .service-card, .testimonial-card').forEach(card => {
-            card.style.opacity = 0;
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(card);
-        });
-        
-        // Manejo del formulario de contacto
-        document.getElementById('quoteForm').addEventListener('submit', function(e) {
+document.addEventListener('scroll', function() {
+    const scrolled = window.pageYOffset;
+    const parallaxElements = document.querySelectorAll('.hexagon');
+    
+    parallaxElements.forEach(function(element, index) {
+        const speed = 0.1 + (index * 0.05);
+        const yPos = -(scrolled * speed);
+        element.style.transform = `translateY(${yPos}px) rotate(${scrolled * 0.02}deg)`;
+    });
+});
+
+// Animación suave para los enlaces de navegación
+document.querySelectorAll('nav a, .cta-button').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        if (this.getAttribute('href').startsWith('#')) {
             e.preventDefault();
-            alert('Thank you for your request! We will contact you shortly.');
-            this.reset();
-        });
-        // Galería y Lightbox
+            
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+});
+
+// Galería y Lightbox - CÓDIGO CORREGIDO
 document.addEventListener('DOMContentLoaded', function() {
     // Inicializar todas las galerías
     initGalleries();
@@ -1210,7 +1174,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initGalleries() {
-    document.querySelectorAll('.project-gallery').forEach(gallery => {
+    const galleries = document.querySelectorAll('.project-gallery');
+    
+    galleries.forEach((gallery, index) => {
         const track = gallery.querySelector('.gallery-track');
         const images = gallery.querySelectorAll('.gallery-image');
         const prevBtn = gallery.querySelector('.gallery-prev');
@@ -1221,6 +1187,11 @@ function initGalleries() {
         
         // Configurar el ancho del track
         track.style.width = `${totalImages * 100}%`;
+        
+        // Configurar el ancho de cada imagen
+        images.forEach(img => {
+            img.style.width = `${100 / totalImages}%`;
+        });
         
         // Navegación
         prevBtn.addEventListener('click', () => {
@@ -1244,15 +1215,19 @@ function initGalleries() {
 }
 
 function initLightbox() {
-    const lightbox = document.createElement('div');
-    lightbox.className = 'lightbox';
-    lightbox.innerHTML = `
-        <button class="lightbox-close">&times;</button>
-        <button class="lightbox-nav lightbox-prev">&#10094;</button>
-        <img class="lightbox-content">
-        <button class="lightbox-nav lightbox-next">&#10095;</button>
-    `;
-    document.body.appendChild(lightbox);
+    // Crear el lightbox solo si no existe
+    let lightbox = document.querySelector('.lightbox');
+    if (!lightbox) {
+        lightbox = document.createElement('div');
+        lightbox.className = 'lightbox';
+        lightbox.innerHTML = `
+            <button class="lightbox-close">&times;</button>
+            <button class="lightbox-nav lightbox-prev">&#10094;</button>
+            <img class="lightbox-content">
+            <button class="lightbox-nav lightbox-next">&#10095;</button>
+        `;
+        document.body.appendChild(lightbox);
+    }
     
     let currentLightboxIndex = 0;
     let currentLightboxImages = [];
@@ -1311,7 +1286,30 @@ function initLightbox() {
         lightboxImg.src = currentLightboxImages[currentLightboxIndex].src;
         lightboxImg.alt = currentLightboxImages[currentLightboxIndex].alt;
     }
+}
+
+// Efecto de aparición para las tarjetas
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = 1;
+            entry.target.style.transform = 'translateY(0)';
         }
+    });
+}, observerOptions);
+
+// Aplicar a las tarjetas de proyectos
+document.querySelectorAll('.project-card').forEach(card => {
+    card.style.opacity = 0;
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(card);
+});
         @media (max-width: 768px) {
     .logo-image {
         width: 50px;
