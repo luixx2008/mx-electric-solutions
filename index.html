@@ -810,6 +810,51 @@
     <section class="services" id="services">
         <h2 class="section-title">Our Services</h2>
         <div class="services-grid">
+            
+            <div class="project-card">
+    <div class="project-gallery">
+        <div class="gallery-container">
+            <div class="gallery-track">
+                <!-- Agrega aquí todas las imágenes de este proyecto -->
+                <img src="su1.jpg" alt="Project image 1" class="gallery-image">
+                <img src="su2.jpg" alt="Project image 2" class="gallery-image">
+                <img src="su3.jpg" alt="Project image 3" class="gallery-image">
+                <img src="su4.jpg" alt="Project image 4" class="gallery-image">
+                <img src="su5.jpg" alt="Project image 5" class="gallery-image">
+                <img src="su6.jpg" alt="Project image 6" class="gallery-image">
+                <img src="su7.jpg" alt="Project image 7" class="gallery-image">
+                
+            </div>
+        </div>
+        <button class="gallery-nav gallery-prev">&#10094;</button>
+        <button class="gallery-nav gallery-next">&#10095;</button>
+    </div>
+    <div class="project-info">
+        <h3>Sistem underground 800 AMPS</h3>
+     <!-- <p>Complete electrical installation in a GYM from lights.</p> -->
+    </div>
+            </div>
+
+            <div class="project-card">
+    <div class="project-gallery">
+        <div class="gallery-container">
+            <div class="gallery-track">
+                <!-- Agrega aquí todas las imágenes de este proyecto -->
+                <img src="gym1.jpg" alt="Project image 1" class="gallery-image">
+                <img src="gym2.jpg" alt="Project image 2" class="gallery-image">
+                <img src="gym3.jpg" alt="Project image 3" class="gallery-image">
+                
+            </div>
+        </div>
+        <button class="gallery-nav gallery-prev">&#10094;</button>
+        <button class="gallery-nav gallery-next">&#10095;</button>
+    </div>
+    <div class="project-info">
+        <h3>GYM lights Installation</h3>
+     <!-- <p>Complete electrical installation in a GYM from lights.</p> -->
+    </div>
+            </div>
+
 
 
             <div class="service-card">
@@ -1273,108 +1318,6 @@ function initLightbox() {
         height: 50px;
     }
 }
-
-        // carrusel y lightbox
-
-        
-document.addEventListener('DOMContentLoaded', function () {
-    // Para cada galería de proyecto ("carrete")
-    document.querySelectorAll('.project-gallery').forEach(function (gallery) {
-        const track = gallery.querySelector('.gallery-track');
-        const images = track.querySelectorAll('.gallery-image');
-        const prevBtn = gallery.querySelector('.gallery-prev');
-        const nextBtn = gallery.querySelector('.gallery-next');
-        let idx = 0;
-
-        // Mostrar la imagen idx
-        function updateGallery() {
-            track.style.transform = `translateX(-${idx * 100}%)`;
-        }
-
-        // Si solo hay una imagen, ocultar flechas
-        if (images.length <= 1) {
-            if (prevBtn) prevBtn.style.display = 'none';
-            if (nextBtn) nextBtn.style.display = 'none';
-        } else {
-            if (prevBtn) prevBtn.addEventListener('click', function () {
-                idx = (idx - 1 + images.length) % images.length;
-                updateGallery();
-            });
-            if (nextBtn) nextBtn.addEventListener('click', function () {
-                idx = (idx + 1) % images.length;
-                updateGallery();
-            });
-        }
-        updateGallery();
-
-        // Lightbox para cada imagen de esta galería
-        images.forEach((img, i) => {
-            img.addEventListener('click', function () {
-                openLightbox(Array.from(images).map(i => i.src), i);
-            });
-        });
-    });
-
-    // Crear lightbox global si no existe
-    if (!document.querySelector('.lightbox')) {
-        const lightbox = document.createElement('div');
-        lightbox.className = 'lightbox';
-        lightbox.innerHTML = `
-            <button class="lightbox-close">&times;</button>
-            <button class="lightbox-nav lightbox-prev">&#10094;</button>
-            <img class="lightbox-content" src="">
-            <button class="lightbox-nav lightbox-next">&#10095;</button>
-        `;
-        document.body.appendChild(lightbox);
-
-        // Eventos cierre
-        lightbox.querySelector('.lightbox-close').onclick = () => {
-            lightbox.classList.remove('active');
-        };
-
-        // Cerrar al hacer click fuera de la imagen
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) {
-                lightbox.classList.remove('active');
-            }
-        });
-    }
-
-    // Lightbox funciones
-    let lightboxImgs = [];
-    let lightboxIdx = 0;
-
-    function openLightbox(imgArr, startIdx) {
-        lightboxImgs = imgArr;
-        lightboxIdx = startIdx;
-        const lb = document.querySelector('.lightbox');
-        updateLightbox();
-        lb.classList.add('active');
-    }
-
-    function updateLightbox() {
-        const lb = document.querySelector('.lightbox');
-        const img = lb.querySelector('.lightbox-content');
-        if (!lightboxImgs.length) return;
-        img.src = lightboxImgs[lightboxIdx];
-    }
-
-    // Buttons for lightbox
-    document.querySelector('.lightbox .lightbox-prev').onclick = function (e) {
-        e.stopPropagation();
-        lightboxIdx = (lightboxIdx - 1 + lightboxImgs.length) % lightboxImgs.length;
-        updateLightbox();
-    };
-    document.querySelector('.lightbox .lightbox-next').onclick = function (e) {
-        e.stopPropagation();
-        lightboxIdx = (lightboxIdx + 1) % lightboxImgs.length;
-        updateLightbox();
-    };
-    document.querySelector('.lightbox-close').onclick = function (e) {
-        e.stopPropagation();
-        document.querySelector('.lightbox').classList.remove('active');
-    };
-});
     </script>
 </body>
 </html>
