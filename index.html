@@ -97,17 +97,13 @@
             gap: 15px;
         }
         
-         .logo-placeholder {
+        .logo-image {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, var(--neon-aqua), var(--neon-green));
+            object-fit: contain;
             border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: var(--dark-bg);
             box-shadow: 0 0 15px var(--neon-aqua);
+            background: transparent;
         }
         
         .title-container h1 {
@@ -251,27 +247,27 @@
         }
         
         .service-icon {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80px;
-}
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80px;
+        }
 
-.service-icon img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 10px;
-    border: 2px solid var(--neon-aqua);
-    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
-    transition: all 0.3s ease;
-}
+        .service-icon img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid var(--neon-aqua);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+            transition: all 0.3s ease;
+        }
 
-.service-card:hover .service-icon img {
-    transform: scale(1.1);
-    box-shadow: 0 0 25px rgba(0, 243, 255, 0.6);
-}
+        .service-card:hover .service-icon img {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.6);
+        }
         
         .service-card h3 {
             margin-bottom: 15px;
@@ -294,33 +290,69 @@
             gap: 30px;
         }
 
-        /* Estas reglas deben estar en tu CSS */
-.project-gallery {
-    position: relative;
-    width: 100%;
-    height: 250px;
-    overflow: hidden;
-    background: #1a1a1a;
-}
+        /* Estilos para la galería de proyectos */
+        .project-gallery {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
 
-.gallery-container {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
+        .gallery-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
 
-.gallery-track {
-    display: flex;
-    transition: transform 0.5s ease;
-    height: 100%;
-}
+        .gallery-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
 
-.gallery-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    flex-shrink: 0;
-}
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.02);
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 243, 255, 0.7);
+            color: var(--dark-bg);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-nav:hover {
+            background: var(--neon-aqua);
+            box-shadow: 0 0 15px var(--neon-aqua);
+        }
+
+        .gallery-prev {
+            left: 10px;
+        }
+
+        .gallery-next {
+            right: 10px;
+        }
         
         .project-card {
             background-color: var(--card-bg);
@@ -335,27 +367,6 @@
             transform: translateY(-10px);
             box-shadow: 0 10px 25px rgba(0, 243, 255, 0.3);
             border-color: var(--neon-aqua);
-        }
-        
-        .project-img {
-            width: 100%;
-            height: 200px;
-            background-color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #777;
-            font-size: 1.1rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .project-img::before {
-            content: "Project Image";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
         }
         
         .project-info {
@@ -527,7 +538,8 @@
         }
         
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             width: 100%;
             padding: 12px 15px;
             background-color: rgba(30, 30, 30, 0.8);
@@ -539,7 +551,8 @@
         }
         
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group textarea:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--neon-aqua);
         }
@@ -620,6 +633,76 @@
             font-size: 0.9rem;
         }
         
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border: 2px solid var(--neon-aqua);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1001;
+        }
+
+        .lightbox-close:hover {
+            color: var(--neon-aqua);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 243, 255, 0.7);
+            color: var(--dark-bg);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .lightbox-nav:hover {
+            background: var(--neon-aqua);
+        }
+
+        .lightbox-prev {
+            left: 30px;
+        }
+
+        .lightbox-next {
+            right: 30px;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             header {
@@ -648,148 +731,12 @@
             .contact-header {
                 margin-top: 10px;
             }
+            
+            .logo-image {
+                width: 50px;
+                height: 50px;
+            }
         }
-        /* Estilos para la galería de proyectos */
-.project-gallery {
-    position: relative;
-    width: 100%;
-    height: 250px;
-    overflow: hidden;
-    background: #1a1a1a;
-}
-
-.gallery-container {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-}
-
-.gallery-track {
-    display: flex;
-    transition: transform 0.5s ease;
-    height: 100%;
-}
-
-.gallery-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    flex-shrink: 0;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.gallery-image:hover {
-    transform: scale(1.02);
-}
-
-.gallery-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 243, 255, 0.7);
-    color: var(--dark-bg);
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s ease;
-}
-
-.gallery-nav:hover {
-    background: var(--neon-aqua);
-    box-shadow: 0 0 15px var(--neon-aqua);
-}
-
-.gallery-prev {
-    left: 10px;
-}
-
-.gallery-next {
-    right: 10px;
-}
-
-/* Lightbox */
-.lightbox {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
-
-.lightbox.active {
-    display: flex;
-}
-
-.lightbox-content {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-    border: 2px solid var(--neon-aqua);
-    box-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
-    border-radius: 10px;
-}
-
-.lightbox-close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: white;
-    font-size: 40px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    z-index: 1001;
-}
-
-.lightbox-close:hover {
-    color: var(--neon-aqua);
-}
-
-.lightbox-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 243, 255, 0.7);
-    color: var(--dark-bg);
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 1001;
-}
-
-.lightbox-nav:hover {
-    background: var(--neon-aqua);
-}
-
-.lightbox-prev {
-    left: 30px;
-}
-
-.lightbox-next {
-    right: 30px;
-}
-       .logo-image {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    border-radius: 10px;
-    box-shadow: 0 0 15px var(--neon-aqua);
-    background: transparent;
-}
     </style>
 </head>
 <body>
@@ -838,8 +785,20 @@
     <section class="services" id="services">
         <h2 class="section-title">Our Services</h2>
         <div class="services-grid">
-            
-
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Electrical Installations</h3>
+                <p>Complete electrical system installations for new construction and remodeling projects with NEC compliance.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h3>Repair & Maintenance</h3>
+                <p>24/7 emergency electrical repairs and preventive maintenance programs to keep your systems running safely.</p>
+            </div>
             <div class="service-card">
                 <div class="service-icon">
                     <i class="fas fa-solar-panel"></i>
@@ -854,118 +813,60 @@
     <section class="projects" id="projects">
         <h2 class="section-title">Our Projects</h2>
         <div class="gallery">
-
-            
             <div class="project-card">
-            <div class="project-gallery">
-                <div class="gallery-container">
-                    <div class="gallery-track">
-                        <img src="remod2.jpg" alt="Project image 2" class="gallery-image">
-                        <img src="remod3.jpg" alt="Project image 3" class="gallery-image">
-                        <img src="remod4.jpg" alt="Project image 4" class="gallery-image">
-                        <img src="remod5.jpg" alt="Project image 5" class="gallery-image">
-                        <img src="remod6.jpg" alt="Project image 6" class="gallery-image">
+                <div class="project-gallery">
+                    <div class="gallery-container">
+                        <div class="gallery-track">
+                            <img src="remod2.jpg" alt="Project image 2" class="gallery-image">
+                            <img src="remod3.jpg" alt="Project image 3" class="gallery-image">
+                            <img src="remod4.jpg" alt="Project image 4" class="gallery-image">
+                            <img src="remod5.jpg" alt="Project image 5" class="gallery-image">
+                            <img src="remod6.jpg" alt="Project image 6" class="gallery-image">
+                        </div>
                     </div>
+                    <button class="gallery-nav gallery-prev">&#10094;</button>
+                    <button class="gallery-nav gallery-next">&#10095;</button>
                 </div>
-                <button class="gallery-nav gallery-prev">&#10094;</button>
-                <button class="gallery-nav gallery-next">&#10095;</button>
+                <div class="project-info">
+                    <h3>Lights remodelation</h3>
+                </div>
             </div>
-            <div class="project-info">
-                <h3>Lights remodelation</h3>
-            </div>
-        </div>
             
-                    <div class="project-card">
-            <div class="project-gallery">
-                <div class="gallery-container">
-                    <div class="gallery-track">
-                        <img src="su1.jpg" alt="Project image 1" class="gallery-image">
-                        <img src="su2.jpg" alt="Project image 2" class="gallery-image">
-                        <img src="su3.jpg" alt="Project image 3" class="gallery-image">
-                        <img src="su4.jpg" alt="Project image 4" class="gallery-image">
-                        <img src="su5.jpg" alt="Project image 5" class="gallery-image">
-                        <img src="su6.jpg" alt="Project image 6" class="gallery-image">
-                        <img src="su7.jpg" alt="Project image 7" class="gallery-image">
+            <div class="project-card">
+                <div class="project-gallery">
+                    <div class="gallery-container">
+                        <div class="gallery-track">
+                            <img src="su1.jpg" alt="Project image 1" class="gallery-image">
+                            <img src="su2.jpg" alt="Project image 2" class="gallery-image">
+                            <img src="su3.jpg" alt="Project image 3" class="gallery-image">
+                            <img src="su4.jpg" alt="Project image 4" class="gallery-image">
+                            <img src="su5.jpg" alt="Project image 5" class="gallery-image">
+                            <img src="su6.jpg" alt="Project image 6" class="gallery-image">
+                            <img src="su7.jpg" alt="Project image 7" class="gallery-image">
+                        </div>
                     </div>
+                    <button class="gallery-nav gallery-prev">&#10094;</button>
+                    <button class="gallery-nav gallery-next">&#10095;</button>
                 </div>
-                <button class="gallery-nav gallery-prev">&#10094;</button>
-                <button class="gallery-nav gallery-next">&#10095;</button>
+                <div class="project-info">
+                    <h3>Sistem underground 800 AMPS</h3>
+                </div>
             </div>
-            <div class="project-info">
-                <h3>Sistem underground 800 AMPS</h3>
-            </div>
-        </div>
-        
-        <div class="project-card">
-            <div class="project-gallery">
-                <div class="gallery-container">
-                    <div class="gallery-track">
-                        <img src="gym1.jpg" alt="Project image 1" class="gallery-image">
-                        <img src="gym2.jpg" alt="Project image 2" class="gallery-image">
-                        <img src="gym3.jpg" alt="Project image 3" class="gallery-image">
+            
+            <div class="project-card">
+                <div class="project-gallery">
+                    <div class="gallery-container">
+                        <div class="gallery-track">
+                            <img src="gym1.jpg" alt="Project image 1" class="gallery-image">
+                            <img src="gym2.jpg" alt="Project image 2" class="gallery-image">
+                            <img src="gym3.jpg" alt="Project image 3" class="gallery-image">
+                        </div>
                     </div>
+                    <button class="gallery-nav gallery-prev">&#10094;</button>
+                    <button class="gallery-nav gallery-next">&#10095;</button>
                 </div>
-                <button class="gallery-nav gallery-prev">&#10094;</button>
-                <button class="gallery-nav gallery-next">&#10095;</button>
-            </div>
-            <div class="project-info">
-                <h3>GYM lights Installation</h3>
-            </div>
-        </div>
-
-
-            
-            <!-- Proyecto 1 -->
-            <div class="project-card">
-                <div class="project-img"></div>
                 <div class="project-info">
-                    <h3>Residential Installation</h3>
-                    <p>Complete electrical installation in luxury residence with home automation system integration.</p>
-                </div>
-            </div>
-            
-            <!-- Proyecto 2 -->
-            <div class="project-card">
-                <div class="project-img"></div>
-                <div class="project-info">
-                    <h3>Commercial Retrofit</h3>
-                    <p>LED lighting retrofit for shopping center with energy management system installation.</p>
-                </div>
-            </div>
-            
-            <!-- Proyecto 3 -->
-            <div class="project-card">
-                <div class="project-img"></div>
-                <div class="project-info">
-                    <h3>Industrial Facility</h3>
-                    <p>Power distribution systems and backup generators for manufacturing plant expansion.</p>
-                </div>
-            </div>
-            
-            <!-- Proyecto 4 -->
-            <div class="project-card">
-                <div class="project-img"></div>
-                <div class="project-info">
-                    <h3>Office Building</h3>
-                    <p>Smart electrical systems for corporate offices with centralized control and monitoring.</p>
-                </div>
-            </div>
-            
-            <!-- Proyecto 5 -->
-            <div class="project-card">
-                <div class="project-img"></div>
-                <div class="project-info">
-                    <h3>Multi-Family Residential</h3>
-                    <p>Complete electrical systems for condominium complex with integrated solar panels.</p>
-                </div>
-            </div>
-            
-            <!-- Proyecto 6 -->
-            <div class="project-card">
-                <div class="project-img"></div>
-                <div class="project-info">
-                    <h3>Educational Facility</h3>
-                    <p>Electrical modernization for university campus with enhanced safety and security systems.</p>
+                    <h3>GYM lights Installation</h3>
                 </div>
             </div>
         </div>
@@ -1069,7 +970,7 @@
                     </div>
                     <div class="form-group">
                         <label for="service">Service Needed</label>
-                        <select id="service" class="form-group input">
+                        <select id="service" required>
                             <option value="">Select a service</option>
                             <option value="residential">Residential Electrical</option>
                             <option value="commercial">Commercial Electrical</option>
@@ -1134,314 +1035,171 @@
             <p>&copy; 2023 MX Electric Solution! - All Rights Reserved | A product by Tecnologias paramo</p>
         </div>
     </footer>
-    <script>// CÓDIGO DE DIAGNÓSTICO - Reemplaza todo tu JavaScript temporalmente
-console.log('🚀 Script cargado');
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('✅ DOM completamente cargado');
-    
-    // Diagnosticar galerías
-    diagnosticarGalerias();
-    
-    // Inicializar funcionalidades
-    initGalleries();
-    initLightbox();
-    
-    // Efecto parallax
-    initParallax();
-    
-    // Navegación suave
-    initSmoothScroll();
-});
-
-function diagnosticarGalerias() {
-    console.log('--- DIAGNÓSTICO DE GALERÍAS ---');
-    
-    const galleries = document.querySelectorAll('.project-gallery');
-    console.log(`Número de galerías encontradas: ${galleries.length}`);
-    
-    galleries.forEach((gallery, index) => {
-        console.log(`\n🔍 Analizando galería ${index + 1}:`);
-        
-        const track = gallery.querySelector('.gallery-track');
-        const images = gallery.querySelectorAll('.gallery-image');
-        const prevBtn = gallery.querySelector('.gallery-prev');
-        const nextBtn = gallery.querySelector('.gallery-next');
-        
-        console.log(`   - Track: ${track ? '✅ Encontrado' : '❌ No encontrado'}`);
-        console.log(`   - Imágenes: ${images.length}`);
-        console.log(`   - Botón anterior: ${prevBtn ? '✅' : '❌'}`);
-        console.log(`   - Botón siguiente: ${nextBtn ? '✅' : '❌'}`);
-        
-        // Verificar rutas de imágenes
-        images.forEach((img, imgIndex) => {
-            console.log(`   - Imagen ${imgIndex + 1}: ${img.src}`);
-        });
-    });
-}
-
-function initGalleries() {
-    console.log('🎨 Inicializando galerías...');
-    
-    const galleries = document.querySelectorAll('.project-gallery');
-    
-    galleries.forEach((gallery, galleryIndex) => {
-        console.log(`   Configurando galería ${galleryIndex + 1}`);
-        
-        const track = gallery.querySelector('.gallery-track');
-        const images = gallery.querySelectorAll('.gallery-image');
-        const prevBtn = gallery.querySelector('.gallery-prev');
-        const nextBtn = gallery.querySelector('.gallery-next');
-        
-        if (!track || !prevBtn || !nextBtn) {
-            console.log(`   ❌ Elementos faltantes en galería ${galleryIndex + 1}`);
-            return;
-        }
-        
-        let currentIndex = 0;
-        const totalImages = images.length;
-        
-        // Configurar dimensiones
-        track.style.width = `${totalImages * 100}%`;
-        images.forEach(img => {
-            img.style.width = `${100 / totalImages}%`;
-        });
-        
-        // Event listeners
-        prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalImages - 1;
-            updateGallery();
-            console.log(`   ← Navegando a imagen ${currentIndex + 1}`);
-        });
-        
-        nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex < totalImages - 1) ? currentIndex + 1 : 0;
-            updateGallery();
-            console.log(`   → Navegando a imagen ${currentIndex + 1}`);
-        });
-        
-        function updateGallery() {
-            const translateX = -currentIndex * (100 / totalImages);
-            track.style.transform = `translateX(${translateX}%)`;
-        }
-        
-        updateGallery();
-        console.log(`   ✅ Galería ${galleryIndex + 1} configurada`);
-    });
-}
-
-function initLightbox() {
-    console.log('💡 Inicializando lightbox...');
-    
-    // ... (el resto del código de lightbox que te proporcioné antes)
-}
-
-function initParallax() {
-    // ... (código parallax)
-}
-
-function initSmoothScroll() {
-    // ... (código smooth scroll)
-}</script>
-    <!--
     <script>
-        // Efecto parallax para los hexágonos del fondo
-document.addEventListener('scroll', function() {
-    const scrolled = window.pageYOffset;
-    const parallaxElements = document.querySelectorAll('.hexagon');
-    
-    parallaxElements.forEach(function(element, index) {
-        const speed = 0.1 + (index * 0.05);
-        const yPos = -(scrolled * speed);
-        element.style.transform = `translateY(${yPos}px) rotate(${scrolled * 0.02}deg)`;
-    });
-});
+        // Inicializar todo cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            initGalleries();
+            initLightbox();
+            initParallax();
+            initSmoothScroll();
+            initForm();
+        });
 
-// Animación suave para los enlaces de navegación
-document.querySelectorAll('nav a, .cta-button').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        if (this.getAttribute('href').startsWith('#')) {
-            e.preventDefault();
+        // Galerías de proyectos
+        function initGalleries() {
+            const galleries = document.querySelectorAll('.project-gallery');
             
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
+            galleries.forEach((gallery) => {
+                const track = gallery.querySelector('.gallery-track');
+                const images = gallery.querySelectorAll('.gallery-image');
+                const prevBtn = gallery.querySelector('.gallery-prev');
+                const nextBtn = gallery.querySelector('.gallery-next');
+                
+                let currentIndex = 0;
+                const totalImages = images.length;
+                
+                // Configurar dimensiones
+                track.style.width = `${totalImages * 100}%`;
+                images.forEach(img => {
+                    img.style.width = `${100 / totalImages}%`;
                 });
+                
+                // Navegación
+                prevBtn.addEventListener('click', () => {
+                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalImages - 1;
+                    updateGallery();
+                });
+                
+                nextBtn.addEventListener('click', () => {
+                    currentIndex = (currentIndex < totalImages - 1) ? currentIndex + 1 : 0;
+                    updateGallery();
+                });
+                
+                function updateGallery() {
+                    const translateX = -currentIndex * (100 / totalImages);
+                    track.style.transform = `translateX(${translateX}%)`;
+                }
+                
+                updateGallery();
+            });
+        }
+
+        // Lightbox para imágenes
+        function initLightbox() {
+            // Crear el lightbox
+            const lightbox = document.createElement('div');
+            lightbox.className = 'lightbox';
+            lightbox.innerHTML = `
+                <button class="lightbox-close">&times;</button>
+                <button class="lightbox-nav lightbox-prev">&#10094;</button>
+                <img class="lightbox-content">
+                <button class="lightbox-nav lightbox-next">&#10095;</button>
+            `;
+            document.body.appendChild(lightbox);
+            
+            let currentLightboxIndex = 0;
+            let currentLightboxImages = [];
+            
+            // Abrir lightbox al hacer clic en una imagen
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('gallery-image')) {
+                    const gallery = e.target.closest('.project-gallery');
+                    const images = Array.from(gallery.querySelectorAll('.gallery-image'));
+                    currentLightboxImages = images;
+                    currentLightboxIndex = images.indexOf(e.target);
+                    
+                    openLightbox();
+                }
+            });
+            
+            // Cerrar lightbox
+            lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) closeLightbox();
+            });
+            
+            // Navegación lightbox
+            lightbox.querySelector('.lightbox-prev').addEventListener('click', () => {
+                currentLightboxIndex = (currentLightboxIndex > 0) ? currentLightboxIndex - 1 : currentLightboxImages.length - 1;
+                updateLightbox();
+            });
+            
+            lightbox.querySelector('.lightbox-next').addEventListener('click', () => {
+                currentLightboxIndex = (currentLightboxIndex < currentLightboxImages.length - 1) ? currentLightboxIndex + 1 : 0;
+                updateLightbox();
+            });
+            
+            // Navegación con teclado
+            document.addEventListener('keydown', function(e) {
+                if (lightbox.classList.contains('active')) {
+                    if (e.key === 'Escape') closeLightbox();
+                    if (e.key === 'ArrowLeft') lightbox.querySelector('.lightbox-prev').click();
+                    if (e.key === 'ArrowRight') lightbox.querySelector('.lightbox-next').click();
+                }
+            });
+            
+            function openLightbox() {
+                updateLightbox();
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+            
+            function updateLightbox() {
+                const lightboxImg = lightbox.querySelector('.lightbox-content');
+                lightboxImg.src = currentLightboxImages[currentLightboxIndex].src;
+                lightboxImg.alt = currentLightboxImages[currentLightboxIndex].alt;
             }
         }
-    });
-});
 
-// Galería y Lightbox - CÓDIGO CORREGIDO
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar todas las galerías
-    initGalleries();
-    
-    // Lightbox
-    initLightbox();
-});
-
-function initGalleries() {
-    const galleries = document.querySelectorAll('.project-gallery');
-    
-    galleries.forEach((gallery, index) => {
-        const track = gallery.querySelector('.gallery-track');
-        const images = gallery.querySelectorAll('.gallery-image');
-        const prevBtn = gallery.querySelector('.gallery-prev');
-        const nextBtn = gallery.querySelector('.gallery-next');
-        
-        let currentIndex = 0;
-        const totalImages = images.length;
-        
-        // Configurar el ancho del track
-        track.style.width = `${totalImages * 100}%`;
-        
-        // Configurar el ancho de cada imagen
-        images.forEach(img => {
-            img.style.width = `${100 / totalImages}%`;
-        });
-        
-        // Navegación
-        prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalImages - 1;
-            updateGallery();
-        });
-        
-        nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex < totalImages - 1) ? currentIndex + 1 : 0;
-            updateGallery();
-        });
-        
-        function updateGallery() {
-            const translateX = -currentIndex * (100 / totalImages);
-            track.style.transform = `translateX(${translateX}%)`;
+        // Efecto parallax para los hexágonos del fondo
+        function initParallax() {
+            document.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('.hexagon');
+                
+                parallaxElements.forEach(function(element, index) {
+                    const speed = 0.1 + (index * 0.05);
+                    const yPos = -(scrolled * speed);
+                    element.style.transform = `translateY(${yPos}px) rotate(${scrolled * 0.02}deg)`;
+                });
+            });
         }
-        
-        // Inicializar
-        updateGallery();
-    });
-}
 
-function initLightbox() {
-    // Crear el lightbox solo si no existe
-    let lightbox = document.querySelector('.lightbox');
-    if (!lightbox) {
-        lightbox = document.createElement('div');
-        lightbox.className = 'lightbox';
-        lightbox.innerHTML = `
-            <button class="lightbox-close">&times;</button>
-            <button class="lightbox-nav lightbox-prev">&#10094;</button>
-            <img class="lightbox-content">
-            <button class="lightbox-nav lightbox-next">&#10095;</button>
-        `;
-        document.body.appendChild(lightbox);
-    }
-    
-    let currentLightboxIndex = 0;
-    let currentLightboxImages = [];
-    
-    // Abrir lightbox
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('gallery-image')) {
-            const gallery = e.target.closest('.project-gallery');
-            const images = Array.from(gallery.querySelectorAll('.gallery-image'));
-            currentLightboxImages = images;
-            currentLightboxIndex = images.indexOf(e.target);
-            
-            openLightbox();
+        // Navegación suave
+        function initSmoothScroll() {
+            document.querySelectorAll('nav a, .cta-button').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
         }
-    });
-    
-    // Cerrar lightbox
-    lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', function(e) {
-        if (e.target === lightbox) closeLightbox();
-    });
-    
-    // Navegación lightbox
-    lightbox.querySelector('.lightbox-prev').addEventListener('click', () => {
-        currentLightboxIndex = (currentLightboxIndex > 0) ? currentLightboxIndex - 1 : currentLightboxImages.length - 1;
-        updateLightbox();
-    });
-    
-    lightbox.querySelector('.lightbox-next').addEventListener('click', () => {
-        currentLightboxIndex = (currentLightboxIndex < currentLightboxImages.length - 1) ? currentLightboxIndex + 1 : 0;
-        updateLightbox();
-    });
-    
-    // Navegación con teclado
-    document.addEventListener('keydown', function(e) {
-        if (lightbox.classList.contains('active')) {
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowLeft') lightbox.querySelector('.lightbox-prev').click();
-            if (e.key === 'ArrowRight') lightbox.querySelector('.lightbox-next').click();
+
+        // Manejo del formulario
+        function initForm() {
+            document.getElementById('quoteForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your request! We will contact you shortly.');
+                this.reset();
+            });
         }
-    });
-    
-    function openLightbox() {
-        updateLightbox();
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-    
-    function closeLightbox() {
-        lightbox.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-    
-    function updateLightbox() {
-        const lightboxImg = lightbox.querySelector('.lightbox-content');
-        lightboxImg.src = currentLightboxImages[currentLightboxIndex].src;
-        lightboxImg.alt = currentLightboxImages[currentLightboxIndex].alt;
-    }
-}
-
-// Efecto de aparición para las tarjetas
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = 1;
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Aplicar a las tarjetas de proyectos
-document.querySelectorAll('.project-card').forEach(card => {
-    card.style.opacity = 0;
-    card.style.transform = 'translateY(20px)';
-    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    observer.observe(card);
-});
-        @media (max-width: 768px) {
-    .logo-image {
-        width: 50px;
-        height: 50px;
-    }
-}
-        document.addEventListener('DOMContentLoaded', function() {
-    console.log('✅ DOM cargado correctamente');
-    
-    // Verificar si encuentra las galerías
-    const galleries = document.querySelectorAll('.project-gallery');
-    console.log(`🔍 Se encontraron ${galleries.length} galerías`);
-    
-    galleries.forEach((gallery, index) => {
-        console.log(`📷 Galería ${index + 1}:`, gallery);
-    });
-    
-    initGalleries();
-    initLightbox();
-});
-    </script> -->
+    </script>
 </body>
 </html>
