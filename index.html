@@ -195,6 +195,8 @@
             transition: all 0.3s ease;
             box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
             margin: 5px;
+            border: none;
+            cursor: pointer;
         }
         
         .cta-button:hover {
@@ -206,6 +208,12 @@
             background: transparent;
             border: 2px solid var(--neon-aqua);
             color: var(--neon-aqua);
+        }
+        
+        .cta-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
         }
         
         /* Services Section */
@@ -560,6 +568,29 @@
         .form-group textarea {
             height: 150px;
             resize: vertical;
+        }
+        
+        /* Mensajes de estado del formulario */
+        .form-message {
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .form-message.success {
+            background-color: rgba(0, 255, 0, 0.1);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            display: block;
+        }
+        
+        .form-message.error {
+            background-color: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff6b6b;
+            color: #ff6b6b;
+            display: block;
         }
         
         /* Footer */
@@ -955,22 +986,25 @@
             </div>
             <div class="contact-form">
                 <h3>Request a Quote</h3>
-                <form id="quoteForm">
+                <!-- Mensajes de estado del formulario -->
+                <div id="formMessage" class="form-message"></div>
+                
+                <form id="quoteForm" action="https://formspree.io/f/mananjgg" method="POST">
                     <div class="form-group">
                         <label for="name">Full Name</label>
-                        <input type="text" id="name" required>
+                        <input type="text" id="name" name="name" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email Address</label>
-                        <input type="email" id="email" required>
+                        <input type="email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" required>
+                        <input type="tel" id="phone" name="phone" required>
                     </div>
                     <div class="form-group">
                         <label for="service">Service Needed</label>
-                        <select id="service" required>
+                        <select id="service" name="service" required>
                             <option value="">Select a service</option>
                             <option value="residential">Residential Electrical</option>
                             <option value="commercial">Commercial Electrical</option>
@@ -982,9 +1016,9 @@
                     </div>
                     <div class="form-group">
                         <label for="message">Project Details</label>
-                        <textarea id="message" required></textarea>
+                        <textarea id="message" name="message" required></textarea>
                     </div>
-                    <button type="submit" class="cta-button">Submit Request</button>
+                    <button type="submit" class="cta-button" id="submitButton">Submit Request</button>
                 </form>
             </div>
         </div>
@@ -1043,7 +1077,7 @@
             initLightbox();
             initParallax();
             initSmoothScroll();
-            initForm();
+            initFormspree();
         });
 
         // Galerías de proyectos
@@ -1192,12 +1226,53 @@
             });
         }
 
-        // Manejo del formulario
-        function initForm() {
-            document.getElementById('quoteForm').addEventListener('submit', function(e) {
+        // Integración con Formspree
+        function initFormspree() {
+            const form = document.getElementById('quoteForm');
+            const formMessage = document.getElementById('formMessage');
+            const submitButton = document.getElementById('submitButton');
+            const originalButtonText = submitButton.textContent;
+            
+            form.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                alert('Thank you for your request! We will contact you shortly.');
-                this.reset();
+                
+                // Cambiar el texto del botón y deshabilitarlo
+                submitButton.textContent = 'Sending...';
+                submitButton.disabled = true;
+                
+                try {
+                    const formData = new FormData(form);
+                    
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        // Mostrar mensaje de éxito
+                        formMessage.textContent = 'Thank you for your message! We will get back to you soon.';
+                        formMessage.className = 'form-message success';
+                        form.reset();
+                    } else {
+                        throw new Error('Form submission failed');
+                    }
+                } catch (error) {
+                    // Mostrar mensaje de error
+                    formMessage.textContent = 'Sorry, there was an error sending your message. Please try again later.';
+                    formMessage.className = 'form-message error';
+                } finally {
+                    // Restaurar el botón
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+                    
+                    // Ocultar el mensaje después de 5 segundos
+                    setTimeout(() => {
+                        formMessage.style.display = 'none';
+                    }, 5000);
+                }
             });
         }
     </script>
