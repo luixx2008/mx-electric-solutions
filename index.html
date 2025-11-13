@@ -293,6 +293,34 @@
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
         }
+
+        /* Estas reglas deben estar en tu CSS */
+.project-gallery {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    background: #1a1a1a;
+}
+
+.gallery-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.gallery-track {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
         
         .project-card {
             background-color: var(--card-bg);
@@ -1106,7 +1134,116 @@
             <p>&copy; 2023 MX Electric Solution! - All Rights Reserved | A product by Tecnologias paramo</p>
         </div>
     </footer>
+    <script>// CÓDIGO DE DIAGNÓSTICO - Reemplaza todo tu JavaScript temporalmente
+console.log('🚀 Script cargado');
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ DOM completamente cargado');
     
+    // Diagnosticar galerías
+    diagnosticarGalerias();
+    
+    // Inicializar funcionalidades
+    initGalleries();
+    initLightbox();
+    
+    // Efecto parallax
+    initParallax();
+    
+    // Navegación suave
+    initSmoothScroll();
+});
+
+function diagnosticarGalerias() {
+    console.log('--- DIAGNÓSTICO DE GALERÍAS ---');
+    
+    const galleries = document.querySelectorAll('.project-gallery');
+    console.log(`Número de galerías encontradas: ${galleries.length}`);
+    
+    galleries.forEach((gallery, index) => {
+        console.log(`\n🔍 Analizando galería ${index + 1}:`);
+        
+        const track = gallery.querySelector('.gallery-track');
+        const images = gallery.querySelectorAll('.gallery-image');
+        const prevBtn = gallery.querySelector('.gallery-prev');
+        const nextBtn = gallery.querySelector('.gallery-next');
+        
+        console.log(`   - Track: ${track ? '✅ Encontrado' : '❌ No encontrado'}`);
+        console.log(`   - Imágenes: ${images.length}`);
+        console.log(`   - Botón anterior: ${prevBtn ? '✅' : '❌'}`);
+        console.log(`   - Botón siguiente: ${nextBtn ? '✅' : '❌'}`);
+        
+        // Verificar rutas de imágenes
+        images.forEach((img, imgIndex) => {
+            console.log(`   - Imagen ${imgIndex + 1}: ${img.src}`);
+        });
+    });
+}
+
+function initGalleries() {
+    console.log('🎨 Inicializando galerías...');
+    
+    const galleries = document.querySelectorAll('.project-gallery');
+    
+    galleries.forEach((gallery, galleryIndex) => {
+        console.log(`   Configurando galería ${galleryIndex + 1}`);
+        
+        const track = gallery.querySelector('.gallery-track');
+        const images = gallery.querySelectorAll('.gallery-image');
+        const prevBtn = gallery.querySelector('.gallery-prev');
+        const nextBtn = gallery.querySelector('.gallery-next');
+        
+        if (!track || !prevBtn || !nextBtn) {
+            console.log(`   ❌ Elementos faltantes en galería ${galleryIndex + 1}`);
+            return;
+        }
+        
+        let currentIndex = 0;
+        const totalImages = images.length;
+        
+        // Configurar dimensiones
+        track.style.width = `${totalImages * 100}%`;
+        images.forEach(img => {
+            img.style.width = `${100 / totalImages}%`;
+        });
+        
+        // Event listeners
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalImages - 1;
+            updateGallery();
+            console.log(`   ← Navegando a imagen ${currentIndex + 1}`);
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex < totalImages - 1) ? currentIndex + 1 : 0;
+            updateGallery();
+            console.log(`   → Navegando a imagen ${currentIndex + 1}`);
+        });
+        
+        function updateGallery() {
+            const translateX = -currentIndex * (100 / totalImages);
+            track.style.transform = `translateX(${translateX}%)`;
+        }
+        
+        updateGallery();
+        console.log(`   ✅ Galería ${galleryIndex + 1} configurada`);
+    });
+}
+
+function initLightbox() {
+    console.log('💡 Inicializando lightbox...');
+    
+    // ... (el resto del código de lightbox que te proporcioné antes)
+}
+
+function initParallax() {
+    // ... (código parallax)
+}
+
+function initSmoothScroll() {
+    // ... (código smooth scroll)
+}</script>
+    <!--
     <script>
         // Efecto parallax para los hexágonos del fondo
 document.addEventListener('scroll', function() {
@@ -1291,6 +1428,20 @@ document.querySelectorAll('.project-card').forEach(card => {
         height: 50px;
     }
 }
-    </script>
+        document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ DOM cargado correctamente');
+    
+    // Verificar si encuentra las galerías
+    const galleries = document.querySelectorAll('.project-gallery');
+    console.log(`🔍 Se encontraron ${galleries.length} galerías`);
+    
+    galleries.forEach((gallery, index) => {
+        console.log(`📷 Galería ${index + 1}:`, gallery);
+    });
+    
+    initGalleries();
+    initLightbox();
+});
+    </script> -->
 </body>
 </html>
