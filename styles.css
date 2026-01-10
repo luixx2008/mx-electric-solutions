@@ -4,12 +4,38 @@
             --dark-bg: #0a0a0a;
             --card-bg: rgba(20, 20, 20, 0.8);
         }
-        
+
+        /* cargar solo iconos necesarios de Font Awesome */
+        .fa-bolt:before { content: "\f0e7"; }
+        .fa-tools:before { content: "\f7d9"; }
+        .fa-solar-panel:before { content: "\f5ba"; }
+        .fa-phone:before { content: "\f095"; }
+        .fa-map-marker-alt:before { content: "\f3c5"; }
+        .fa-envelope:before { content: "\f0e0"; }
+        .fa-clock:before { content: "\f017"; }
+        .fa-facebook-f:before { content: "\f39e"; }
+        .fa-twitter:before { content: "\f099"; }
+        .fa-instagram:before { content: "\f16d"; }
+        .fa-linkedin-in:before { content: "\f0e1"; }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        @font-face {
+            font-family: 'Font Awesome 6 Free';
+            font-display: swap;
+            font-style: normal;
+            font-weight: 900;
+            src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2) format('woff2');
+        }
+
+        /* Agrega esto también a tu CSS principal */
+        .font-awesome-fix {
+            font-display: swap !important;
         }
         
         body {
@@ -481,9 +507,10 @@
             font-weight: bold;
         }
         
-        .author-info h4 {
+        .author-info .author-name {
             color: var(--neon-aqua);
             margin-bottom: 5px;
+            font-size: 1.2rem; /* Ajusta según necesites */
         }
         
         .author-info p {
@@ -581,6 +608,30 @@
             display: none;
         }
         
+        /* Lazy loading nativo */
+        .gallery-image {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-image.loaded {
+            opacity: 1;
+        }
+
+        /* Prevenir layout shift */
+        .gallery-image {
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+        }
+
+        /* Responsive images */
+        @media (max-width: 768px) {
+            .gallery-image {
+                aspect-ratio: 16/9;
+            }
+        }
+
         .form-message.success {
             background-color: rgba(0, 255, 0, 0.1);
             border: 1px solid var(--neon-green);
@@ -588,6 +639,21 @@
             display: block;
         }
         
+        /* Enlaces de teléfono más grandes */
+        .contact-header, .footer-column a[href^="tel:"] {
+            min-height: 44px;
+            min-width: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Botones táctiles */
+        .cta-button, .gallery-nav, .social-icon {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
         .form-message.error {
             background-color: rgba(255, 0, 0, 0.1);
             border: 1px solid #ff6b6b;
@@ -598,7 +664,7 @@
         /* Footer */
         footer {
             padding: 50px 5% 30px;
-            background-color: rgba(10, 10, 10, 0.9);
+            background-color: rgba(5, 5, 5, 0.95) !important;
             border-top: 1px solid rgba(0, 243, 255, 0.2);
         }
         
@@ -662,7 +728,7 @@
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #777;
+            color: #aaa !important;
             font-size: 0.9rem;
         }
         

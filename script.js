@@ -7,44 +7,84 @@
             initWeb3Forms();
         });
 
-        // Galerías de proyectos
-        function initGalleries() {
-            const galleries = document.querySelectorAll('.project-gallery');
-            
-            galleries.forEach((gallery) => {
-                const track = gallery.querySelector('.gallery-track');
-                const images = gallery.querySelectorAll('.gallery-image');
-                const prevBtn = gallery.querySelector('.gallery-prev');
-                const nextBtn = gallery.querySelector('.gallery-next');
-                
-                let currentIndex = 0;
-                const totalImages = images.length;
-                
-                // Configurar dimensiones
-                track.style.width = `${totalImages * 100}%`;
-                images.forEach(img => {
-                    img.style.width = `${100 / totalImages}%`;
-                });
-                
-                // Navegación
-                prevBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalImages - 1;
-                    updateGallery();
-                });
-                
-                nextBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex < totalImages - 1) ? currentIndex + 1 : 0;
-                    updateGallery();
-                });
-                
-                function updateGallery() {
-                    const translateX = -currentIndex * (100 / totalImages);
-                    track.style.transform = `translateX(${translateX}%)`;
-                }
-                
-                updateGallery();
+        // Carga diferida de recursos no críticos
+        function loadNonCriticalResources() {
+            // Cargar imágenes de galería con lazy loading
+            const images = document.querySelectorAll('.gallery-image');
+            images.forEach(img => {
+                img.loading = 'lazy';
             });
+
+            // Cargar fuentes no críticas
+            const link = document.createElement('link');
+            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+            link.rel = 'stylesheet';
+            link.media = 'print';
+            link.onload = () => { link.media = 'all'; };
+            document.head.appendChild(link);
         }
+
+        // Ejecutar después de que la página cargue
+        if (document.readyState === 'complete') {
+            loadNonCriticalResources();
+        } else {
+            window.addEventListener('load', loadNonCriticalResources);
+        }
+
+        // Galerías de proyectos
+        // En tu archivo script.js, reemplaza initGalleries() con esta versión:
+function initGalleries() {
+    const galleries = document.querySelectorAll('.project-gallery');
+    
+    galleries.forEach((gallery) => {
+        const track = gallery.querySelector('.gallery-track');
+        const images = gallery.querySelectorAll('.gallery-image');
+        const prevBtn = gallery.querySelector('.gallery-prev');
+        const nextBtn = gallery.querySelector('.gallery-next');
+        
+        let currentIndex = 0;
+        const totalImages = images.length;
+        
+        // Configurar dimensiones
+        track.style.width = `${totalImages * 100}%`;
+        images.forEach(img => {
+            img.style.width = `${100 / totalImages}%`;
+        });
+        
+        // Lazy loading para imágenes
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (!img.classList.contains('loaded')) {
+                        img.classList.add('loaded');
+                    }
+                }
+            });
+        });
+        
+        images.forEach(img => imageObserver.observe(img));
+        
+        // Navegación
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalImages - 1;
+            updateGallery();
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex < totalImages - 1) ? currentIndex + 1 : 0;
+            updateGallery();
+        });
+        
+        function updateGallery() {
+            const translateX = -currentIndex * (100 / totalImages);
+            track.style.transform = `translateX(${translateX}%)`;
+        }
+        
+        updateGallery();
+    });
+}
+        
 
         // Lightbox para imágenes
         function initLightbox() {

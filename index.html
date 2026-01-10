@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MX Electric Solution - Professional electrical services in Austin, Texas. Residential, commercial, and industrial electrical installations, repairs, and maintenance. Licensed and insured.">
+    <meta name="keywords" content="electrician Austin, electrical services, residential electrician, commercial electrical, industrial electrical, Texas electrician">
+    <meta name="author" content="MX Electric Solution">
+    <meta property="og:title" content="MX Electric Solution - Professional Electrical Services">
+    <meta property="og:description" content="Licensed and insured electrical services in Austin, Texas">
+    <meta property="og:image" content="https://mxelectricsolutions.com/logo.png">
+    <meta property="og:url" content="https://mxelectricsolutions.com">
     <title>MX Electric Solution! - Professional Electrical Services</title>
     
     <!-- REDIRECCIÓN AUTOMÁTICA -->
@@ -14,12 +21,27 @@
         }
     </script>
     
-    <link rel="icon" type="image/x-icon" href="logo.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="logo.webp">
+    <link rel="apple-touch-icon" sizes="180x180" href="logo.webp">
+    <link rel="icon" type="image/png" sizes="32x32" href="logo.webp">
+    <link rel="icon" type="image/png" sizes="16x16" href="logo.webp">
+
+    <!-- Precargar Font Awesome sin bloquear -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+
+    <style>
+        /* CSS CRÍTICO - Lo que se ve en la primera pantalla */
+        :root { --neon-aqua: #00f3ff; --neon-green: #00ff9d; --dark-bg: #0a0a0a; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--dark-bg); color: #fff; font-family: 'Segoe UI', sans-serif; }
+        header, .hero { opacity: 0; animation: fadeIn 0.5s forwards; }
+        @keyframes fadeIn { to { opacity: 1; } }
+     </style>
+
+        <!-- CSS no crítico (carga diferida) -->
+        <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="styles.css"></noscript>
 </head>
 <body>
     <!-- Fondo con medio hexágono -->
@@ -32,7 +54,7 @@
     <!-- Header -->
     <header>
         <div class="logo-container">
-            <img src="logo.png" alt="Mx Electric Solutions" class="logo-image">
+            <img src="logo.webp" alt="Mx Electric Solutions" class="logo-image">
             <div class="title-container">
                 <h1>MX Electric Solution!</h1>
             </div>
@@ -100,9 +122,9 @@
                 <div class="project-gallery">
                     <div class="gallery-container">
                         <div class="gallery-track">
-                            <img src="docs/swPics/sw1.jpeg" alt="project image 1" class="gallery-image">
-                            <img src="docs/swPics/sw2.jpeg" alt="project image 2" class="gallery-image">
-                            <img src="docs/swPics/sw3.jpeg" alt="project image 3" class="gallery-image">
+                            <img src="docs/swPics/sw1.webp" alt="project image 1" class="gallery-image">
+                            <img src="docs/swPics/sw2.webp" alt="project image 2" class="gallery-image">
+                            <img src="docs/swPics/sw3.webp" alt="project image 3" class="gallery-image">
                         </div>
                     </div>
                     <button class="gallery-nav gallery-prev">&#10094;</button>
@@ -117,16 +139,16 @@
                 <div class="project-gallery">
                     <div class="gallery-container">
                         <div class="gallery-track">
-                            <img src="docs/remodPics/remod2.jpg" alt="Project image 2" class="gallery-image">
-                            <img src="docs/remodPics/remod3.jpg" alt="Project image 3" class="gallery-image">
-                            <img src="docs/remodPics/remod4.jpg" alt="Project image 4" class="gallery-image">
-                            <img src="docs/remodPics/remod5.jpg" alt="Project image 5" class="gallery-image">
-                            <img src="docs/remodPics/remod6.jpg" alt="Project image 6" class="gallery-image">
+                            <img src="docs/remodPics/remod2.webp" alt="Project image 2" class="gallery-image">
+                            <img src="docs/remodPics/remod3.webp" alt="Project image 3" class="gallery-image">
+                            <img src="docs/remodPics/remod4.webp" alt="Project image 4" class="gallery-image">
+                            <img src="docs/remodPics/remod5.webp" alt="Project image 5" class="gallery-image">
+                            <img src="docs/remodPics/remod6.webp" alt="Project image 6" class="gallery-image">
                             <!-- house #2-->
-                            <img src="docs/remodPics/remod7.jpeg" alt="proyect image 7" class="gallery-image">
-                            <img src="docs/remodPics/remod8.jpeg" alt="proyect image 8" class="gallery-image">
-                            <img src="docs/remodPics/remod9.jpeg" alt="proyect image 9" class="gallery-image">
-                            <img src="docs/remodPics/remod10.jpeg" alt="proyect image 10" class="gallery-image">
+                            <img src="docs/remodPics/remod7.webp" alt="proyect image 7" class="gallery-image">
+                            <img src="docs/remodPics/remod8.webp" alt="proyect image 8" class="gallery-image">
+                            <img src="docs/remodPics/remod9.webp" alt="proyect image 9" class="gallery-image">
+                            <img src="docs/remodPics/remod10.webp" alt="proyect image 10" class="gallery-image">
                         </div>
                     </div>
                     <button class="gallery-nav gallery-prev">&#10094;</button>
@@ -141,13 +163,13 @@
                 <div class="project-gallery">
                     <div class="gallery-container">
                         <div class="gallery-track">
-                            <img src="docs/suPics/su1.jpg" alt="Project image 1" class="gallery-image">
-                            <img src="docs/suPics/su2.jpg" alt="Project image 2" class="gallery-image">
-                            <img src="docs/suPics/su3.jpg" alt="Project image 3" class="gallery-image">
-                            <img src="docs/suPics/su4.jpg" alt="Project image 4" class="gallery-image">
-                            <img src="docs/suPics/su5.jpg" alt="Project image 5" class="gallery-image">
-                            <img src="docs/suPics/su6.jpg" alt="Project image 6" class="gallery-image">
-                            <img src="docs/suPics/su7.jpg" alt="Project image 7" class="gallery-image">
+                            <img src="docs/suPics/su1.webp" alt="Project image 1" class="gallery-image">
+                            <img src="docs/suPics/su2.webp" alt="Project image 2" class="gallery-image">
+                            <img src="docs/suPics/su3.webp" alt="Project image 3" class="gallery-image">
+                            <img src="docs/suPics/su4.webp" alt="Project image 4" class="gallery-image">
+                            <img src="docs/suPics/su5.webp" alt="Project image 5" class="gallery-image">
+                            <img src="docs/suPics/su6.webp" alt="Project image 6" class="gallery-image">
+                            <img src="docs/suPics/su7.webp" alt="Project image 7" class="gallery-image">
                         </div>
                     </div>
                     <button class="gallery-nav gallery-prev">&#10094;</button>
@@ -162,12 +184,12 @@
                 <div class="project-gallery">
                     <div class="gallery-container">
                         <div class="gallery-track">
-                            <img src="docs/gymPics/gym1.jpg" alt="Project image 1" class="gallery-image">
-                            <img src="docs/gymPics/gym2.jpg" alt="Project image 2" class="gallery-image">
-                            <img src="docs/gymPics/gym3.jpg" alt="Project image 3" class="gallery-image">
-                            <img src="docs/gymPics/gym4.jpg" alt="Project image 4" class="gallery-image">
-                            <img src="docs/gymPics/gym5.jpg" alt="Project image 5" class="gallery-image">
-                            <img src="docs/gymPics/gym6.jpg" alt="Project image 6" class="gallery-image">
+                            <img src="docs/gymPics/gym1.webp" alt="Project image 1" class="gallery-image">
+                            <img src="docs/gymPics/gym2.webp" alt="Project image 2" class="gallery-image">
+                            <img src="docs/gymPics/gym3.webp" alt="Project image 3" class="gallery-image">
+                            <img src="docs/gymPics/gym4.webp" alt="Project image 4" class="gallery-image">
+                            <img src="docs/gymPics/gym5.webp" alt="Project image 5" class="gallery-image">
+                            <img src="docs/gymPics/gym6.webp" alt="Project image 6" class="gallery-image">
 
                         </div>
                     </div>
@@ -209,7 +231,7 @@
                 <div class="testimonial-author">
                     <div class="author-avatar">JS</div>
                     <div class="author-info">
-                        <h4>John Smith</h4>
+                        <h3 class="author-name">John Smith</h3>
                         <p>Buda, TX</p>
                     </div>
                 </div>
@@ -219,7 +241,7 @@
                 <div class="testimonial-author">
                     <div class="author-avatar">SR</div>
                     <div class="author-info">
-                        <h4>Sarah Johnson</h4>
+                        <h3 class="author-name">Sarah Johnson</h3>
                         <p>manor, TX</p>
                     </div>
                 </div>
@@ -229,7 +251,7 @@
                 <div class="testimonial-author">
                     <div class="author-avatar">MR</div>
                     <div class="author-info">
-                        <h4>Michael Rodriguez</h4>
+                        <h3 class="author-name">Michael Rodriguez</h3>
                         <p>Austin, TX</p>
                     </div>
                 </div>
