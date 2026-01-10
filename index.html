@@ -19,770 +19,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
     <link rel="icon" type="image/png" sizes="16x16" href="logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --neon-aqua: #00f3ff;
-            --neon-green: #00ff9d;
-            --dark-bg: #0a0a0a;
-            --card-bg: rgba(20, 20, 20, 0.8);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--dark-bg);
-            color: #fff;
-            overflow-x: hidden;
-            position: relative;
-        }
-        
-        /* Fondo con medio hexágono animado */
-        .background-shape {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-        
-        .hexagon {
-            position: absolute;
-            width: 600px;
-            height: 346px;
-            background: linear-gradient(135deg, var(--neon-aqua), var(--neon-green));
-            opacity: 0.1;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            animation: float 15s infinite ease-in-out;
-        }
-        
-        .hexagon:nth-child(1) {
-            top: 10%;
-            left: 5%;
-            width: 300px;
-            height: 173px;
-            animation-delay: 0s;
-        }
-        
-        .hexagon:nth-child(2) {
-            top: 60%;
-            right: 10%;
-            width: 400px;
-            height: 231px;
-            animation-delay: 2s;
-        }
-        
-        .hexagon:nth-child(3) {
-            bottom: 20%;
-            left: 20%;
-            width: 500px;
-            height: 289px;
-            animation-delay: 4s;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-        
-        /* Header y navegación */
-        header {
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: rgba(10, 10, 10, 0.9);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .logo-image {
-            width: 60px;
-            height: 60px;
-            object-fit: contain;
-            border-radius: 10px;
-            box-shadow: 0 0 15px var(--neon-aqua);
-            background: transparent;
-        }
-        
-        .title-container h1 {
-            font-size: 2rem;
-            background: linear-gradient(to right, var(--neon-aqua), var(--neon-green));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-        
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        nav a:hover {
-            color: var(--neon-aqua);
-        }
-        
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(to right, var(--neon-aqua), var(--neon-green));
-            transition: width 0.3s ease;
-        }
-        
-        nav a:hover::after {
-            width: 100%;
-        }
-        
-        .contact-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--neon-green);
-        }
-        
-        .contact-header i {
-            font-size: 1.2rem;
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 120px 5%;
-            text-align: center;
-            position: relative;
-            background: linear-gradient(rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.9));
-        }
-        
-        .hero h2 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, var(--neon-aqua), var(--neon-green));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 15px rgba(0, 243, 255, 0.7);
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            color: #ccc;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(to right, var(--neon-aqua), var(--neon-green));
-            color: var(--dark-bg);
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
-            margin: 5px;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.8);
-        }
-        
-        .cta-button.secondary {
-            background: transparent;
-            border: 2px solid var(--neon-aqua);
-            color: var(--neon-aqua);
-        }
-        
-        .cta-button:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        /* Services Section */
-        .services {
-            padding: 80px 5%;
-            background-color: rgba(15, 15, 15, 0.7);
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            font-size: 2.5rem;
-            background: linear-gradient(to right, var(--neon-aqua), var(--neon-green));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
-        }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .service-card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 30px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 243, 255, 0.1);
-            text-align: center;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 243, 255, 0.3);
-            border-color: var(--neon-aqua);
-        }
-        
-        .service-icon {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 80px;
-        }
-
-        .service-icon img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 2px solid var(--neon-aqua);
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover .service-icon img {
-            transform: scale(1.1);
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.6);
-        }
-        
-        .service-card h3 {
-            margin-bottom: 15px;
-            color: var(--neon-aqua);
-        }
-        
-        .service-card p {
-            color: #ccc;
-            font-size: 0.95rem;
-        }
-        
-        /* Catálogo de proyectos */
-        .projects {
-            padding: 80px 5%;
-        }
-        
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        /* Estilos para la galería de proyectos */
-        .project-gallery {
-            position: relative;
-            width: 100%;
-            height: 250px;
-            overflow: hidden;
-            background: #1a1a1a;
-        }
-
-        .gallery-container {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .gallery-track {
-            display: flex;
-            transition: transform 0.5s ease;
-            height: 100%;
-        }
-
-        .gallery-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            flex-shrink: 0;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-image:hover {
-            transform: scale(1.02);
-        }
-
-        .gallery-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 243, 255, 0.7);
-            color: var(--dark-bg);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s ease;
-        }
-
-        .gallery-nav:hover {
-            background: var(--neon-aqua);
-            box-shadow: 0 0 15px var(--neon-aqua);
-        }
-
-        .gallery-prev {
-            left: 10px;
-        }
-
-        .gallery-next {
-            right: 10px;
-        }
-        
-        .project-card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 243, 255, 0.1);
-        }
-        
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 243, 255, 0.3);
-            border-color: var(--neon-aqua);
-        }
-        
-        .project-info {
-            padding: 20px;
-        }
-        
-        .project-info h3 {
-            margin-bottom: 10px;
-            color: var(--neon-aqua);
-        }
-        
-        .project-info p {
-            color: #ccc;
-            font-size: 0.9rem;
-        }
-        
-        /* About Section */
-        .about {
-            padding: 80px 5%;
-            background-color: rgba(15, 15, 15, 0.7);
-        }
-        
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            flex-wrap: wrap;
-        }
-        
-        .about-text {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .about-text h3 {
-            color: var(--neon-green);
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-        }
-        
-        .about-text p {
-            margin-bottom: 15px;
-            color: #ccc;
-            line-height: 1.6;
-        }
-        
-        .about-image {
-            flex: 1;
-            min-width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, var(--neon-aqua), var(--neon-green));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--dark-bg);
-            font-weight: bold;
-            font-size: 1.2rem;
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            padding: 80px 5%;
-        }
-        
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .testimonial-card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 30px;
-            border: 1px solid rgba(0, 243, 255, 0.1);
-        }
-        
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 20px;
-            color: #ccc;
-            line-height: 1.6;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--neon-aqua), var(--neon-green));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--dark-bg);
-            font-weight: bold;
-        }
-        
-        .author-info h4 {
-            color: var(--neon-aqua);
-            margin-bottom: 5px;
-        }
-        
-        .author-info p {
-            color: #999;
-            font-size: 0.9rem;
-        }
-        
-        /* Contact Section */
-        .contact {
-            padding: 80px 5%;
-            background-color: rgba(15, 15, 15, 0.7);
-        }
-        
-        .contact-container {
-            display: flex;
-            gap: 50px;
-            flex-wrap: wrap;
-        }
-        
-        .contact-info {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .contact-info h3 {
-            color: var(--neon-green);
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-        }
-        
-        .contact-details {
-            margin-bottom: 30px;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            color: #ccc;
-        }
-        
-        .contact-item i {
-            color: var(--neon-aqua);
-            font-size: 1.2rem;
-            width: 20px;
-        }
-        
-        .contact-form {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #ccc;
-        }
-        
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px 15px;
-            background-color: rgba(30, 30, 30, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            color: #fff;
-            font-size: 1rem;
-            transition: border 0.3s ease;
-        }
-        
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--neon-aqua);
-        }
-        
-        .form-group textarea {
-            height: 150px;
-            resize: vertical;
-        }
-        
-        /* Mensajes de estado del formulario */
-        .form-message {
-            padding: 12px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            text-align: center;
-            display: none;
-        }
-        
-        .form-message.success {
-            background-color: rgba(0, 255, 0, 0.1);
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            display: block;
-        }
-        
-        .form-message.error {
-            background-color: rgba(255, 0, 0, 0.1);
-            border: 1px solid #ff6b6b;
-            color: #ff6b6b;
-            display: block;
-        }
-        
-        /* Footer */
-        footer {
-            padding: 50px 5% 30px;
-            background-color: rgba(10, 10, 10, 0.9);
-            border-top: 1px solid rgba(0, 243, 255, 0.2);
-        }
-        
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 40px;
-            margin-bottom: 30px;
-        }
-        
-        .footer-column {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .footer-column h3 {
-            margin-bottom: 20px;
-            color: var(--neon-green);
-            font-size: 1.2rem;
-        }
-        
-        .footer-column p, .footer-column a {
-            color: #ccc;
-            margin-bottom: 10px;
-            display: block;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-column a:hover {
-            color: var(--neon-aqua);
-        }
-        
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            color: #fff;
-            text-decoration: none;
-        }
-        
-        .social-icon:hover {
-            background-color: var(--neon-aqua);
-            transform: translateY(-3px);
-            color: var(--dark-bg);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #777;
-            font-size: 0.9rem;
-        }
-        
-        /* Lightbox */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .lightbox.active {
-            display: flex;
-        }
-
-        .lightbox-content {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-            border: 2px solid var(--neon-aqua);
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
-            border-radius: 10px;
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            z-index: 1001;
-        }
-
-        .lightbox-close:hover {
-            color: var(--neon-aqua);
-        }
-
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 243, 255, 0.7);
-            color: var(--dark-bg);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .lightbox-nav:hover {
-            background: var(--neon-aqua);
-        }
-
-        .lightbox-prev {
-            left: 30px;
-        }
-
-        .lightbox-next {
-            right: 30px;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            nav ul {
-                gap: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .hero h2 {
-                font-size: 2.5rem;
-            }
-            
-            .gallery {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-            
-            .footer-content {
-                flex-direction: column;
-            }
-            
-            .contact-header {
-                margin-top: 10px;
-            }
-            
-            .logo-image {
-                width: 50px;
-                height: 50px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Fondo con medio hexágono -->
@@ -812,7 +49,7 @@
         </nav>
         <div class="contact-header">
             <i class="fas fa-phone"></i>
-            <span>(512) 587-2169<br>(512) 401-7122</span>
+            <span><a href="tel:5125872169">(512) 587-2169</a><br><a href="tel:5124017122">(512) 401-7122</a></span>
         </div>
     </header>
     
@@ -863,9 +100,9 @@
                 <div class="project-gallery">
                     <div class="gallery-container">
                         <div class="gallery-track">
-                            <img src="sw1.jpeg" alt="project image 1" class="gallery-image">
-                            <img src="sw2.jpeg" alt="project image 2" class="gallery-image">
-                            <img src="sw3.jpeg" alt="project image 3" class="gallery-image">
+                            <img src="docs/swPics/sw1.jpeg" alt="project image 1" class="gallery-image">
+                            <img src="docs/swPics/sw2.jpeg" alt="project image 2" class="gallery-image">
+                            <img src="docs/swPics/sw3.jpeg" alt="project image 3" class="gallery-image">
                         </div>
                     </div>
                     <button class="gallery-nav gallery-prev">&#10094;</button>
@@ -880,16 +117,16 @@
                 <div class="project-gallery">
                     <div class="gallery-container">
                         <div class="gallery-track">
-                            <img src="remod2.jpg" alt="Project image 2" class="gallery-image">
-                            <img src="remod3.jpg" alt="Project image 3" class="gallery-image">
-                            <img src="remod4.jpg" alt="Project image 4" class="gallery-image">
-                            <img src="remod5.jpg" alt="Project image 5" class="gallery-image">
-                            <img src="remod6.jpg" alt="Project image 6" class="gallery-image">
+                            <img src="docs/remodPics/remod2.jpg" alt="Project image 2" class="gallery-image">
+                            <img src="docs/remodPics/remod3.jpg" alt="Project image 3" class="gallery-image">
+                            <img src="docs/remodPics/remod4.jpg" alt="Project image 4" class="gallery-image">
+                            <img src="docs/remodPics/remod5.jpg" alt="Project image 5" class="gallery-image">
+                            <img src="docs/remodPics/remod6.jpg" alt="Project image 6" class="gallery-image">
                             <!-- house #2-->
-                            <img src="remod7.jpeg" alt="proyect image 7" class="gallery-image">
-                            <img src="remod8.jpeg" alt="proyect image 8" class="gallery-image">
-                            <img src="remod9.jpeg" alt="proyect image 9" class="gallery-image">
-                            <img src="remod10.jpeg" alt="proyect image 10" class="gallery-image">
+                            <img src="docs/remodPics/remod7.jpeg" alt="proyect image 7" class="gallery-image">
+                            <img src="docs/remodPics/remod8.jpeg" alt="proyect image 8" class="gallery-image">
+                            <img src="docs/remodPics/remod9.jpeg" alt="proyect image 9" class="gallery-image">
+                            <img src="docs/remodPics/remod10.jpeg" alt="proyect image 10" class="gallery-image">
                         </div>
                     </div>
                     <button class="gallery-nav gallery-prev">&#10094;</button>
@@ -904,13 +141,13 @@
                 <div class="project-gallery">
                     <div class="gallery-container">
                         <div class="gallery-track">
-                            <img src="su1.jpg" alt="Project image 1" class="gallery-image">
-                            <img src="su2.jpg" alt="Project image 2" class="gallery-image">
-                            <img src="su3.jpg" alt="Project image 3" class="gallery-image">
-                            <img src="su4.jpg" alt="Project image 4" class="gallery-image">
-                            <img src="su5.jpg" alt="Project image 5" class="gallery-image">
-                            <img src="su6.jpg" alt="Project image 6" class="gallery-image">
-                            <img src="su7.jpg" alt="Project image 7" class="gallery-image">
+                            <img src="docs/suPics/su1.jpg" alt="Project image 1" class="gallery-image">
+                            <img src="docs/suPics/su2.jpg" alt="Project image 2" class="gallery-image">
+                            <img src="docs/suPics/su3.jpg" alt="Project image 3" class="gallery-image">
+                            <img src="docs/suPics/su4.jpg" alt="Project image 4" class="gallery-image">
+                            <img src="docs/suPics/su5.jpg" alt="Project image 5" class="gallery-image">
+                            <img src="docs/suPics/su6.jpg" alt="Project image 6" class="gallery-image">
+                            <img src="docs/suPics/su7.jpg" alt="Project image 7" class="gallery-image">
                         </div>
                     </div>
                     <button class="gallery-nav gallery-prev">&#10094;</button>
@@ -925,12 +162,12 @@
                 <div class="project-gallery">
                     <div class="gallery-container">
                         <div class="gallery-track">
-                            <img src="gym1.jpg" alt="Project image 1" class="gallery-image">
-                            <img src="gym2.jpg" alt="Project image 2" class="gallery-image">
-                            <img src="gym3.jpg" alt="Project image 3" class="gallery-image">
-                            <img src="gym4.jpg" alt="Project image 4" class="gallery-image">
-                            <img src="gym5.jpg" alt="Project image 5" class="gallery-image">
-                            <img src="gym6.jpg" alt="Project image 6" class="gallery-image">
+                            <img src="docs/gymPics/gym1.jpg" alt="Project image 1" class="gallery-image">
+                            <img src="docs/gymPics/gym2.jpg" alt="Project image 2" class="gallery-image">
+                            <img src="docs/gymPics/gym3.jpg" alt="Project image 3" class="gallery-image">
+                            <img src="docs/gymPics/gym4.jpg" alt="Project image 4" class="gallery-image">
+                            <img src="docs/gymPics/gym5.jpg" alt="Project image 5" class="gallery-image">
+                            <img src="docs/gymPics/gym6.jpg" alt="Project image 6" class="gallery-image">
 
                         </div>
                     </div>
@@ -1013,12 +250,12 @@
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-phone"></i>
-                        <span> (512) 587-2169 </span>
-                        <span> (512) 401-7122 </span>
+                        <span> <a href="tel:5125872169">(512) 587-2169</a> </span>
+                        <span><a href="tel:5124017122">(512) 401-7122</a>  </span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <span>mxelectricsolutions@outlook.com</span>
+                        <span><a href="mailto:Mxelectricsolutions@outlook.com">Mxelectricsolutions@outlook.com</a></span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-clock"></i>
@@ -1079,12 +316,12 @@
             <div class="footer-column">
                 <h3>MX Electric Solution!</h3>
                 <p>Professional electrical services with over 15 years of experience. Licensed, bonded, and insured.</p>
-                <div class="social-icons">
+               <!-- <div class="social-icons">
                     <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+                </div>  -->
             </div>
             
             <div class="footer-column">
@@ -1108,8 +345,8 @@
             <div class="footer-column">
                 <h3>Contact Info</h3>
                 <p><i class="fas fa-map-marker-alt"></i>1034 Clayton ln #704 apt Austin TX </p>
-                <p><i class="fas fa-phone"></i>(512) 587-2169 or (512) 401-7122</p>
-                <p><i class="fas fa-envelope"></i> Mxelectricsolutions@outlook.com</p>
+                <p><i class="fas fa-phone"></i><a href="tel:5125872169">(512) 587-2169</a> or <a href="tel:5124017122">(512) 401-7122</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:Mxelectricsolutions@outlook.com">Mxelectricsolutions@outlook.com</a></p>
                 <p><i class="fas fa-clock"></i> Mon-Fri: 8AM-6PM</p>
             </div>
         </div>
@@ -1118,214 +355,6 @@
             <p>&copy; 2023 MX Electric Solution! - All Rights Reserved | A product by Tecnologias paramo</p>
         </div>
     </footer>
-
-    <script>
-        // Inicializar todo cuando el DOM esté listo
-        document.addEventListener('DOMContentLoaded', function() {
-            initGalleries();
-            initLightbox();
-            initParallax();
-            initSmoothScroll();
-            initWeb3Forms();
-        });
-
-        // Galerías de proyectos
-        function initGalleries() {
-            const galleries = document.querySelectorAll('.project-gallery');
-            
-            galleries.forEach((gallery) => {
-                const track = gallery.querySelector('.gallery-track');
-                const images = gallery.querySelectorAll('.gallery-image');
-                const prevBtn = gallery.querySelector('.gallery-prev');
-                const nextBtn = gallery.querySelector('.gallery-next');
-                
-                let currentIndex = 0;
-                const totalImages = images.length;
-                
-                // Configurar dimensiones
-                track.style.width = `${totalImages * 100}%`;
-                images.forEach(img => {
-                    img.style.width = `${100 / totalImages}%`;
-                });
-                
-                // Navegación
-                prevBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalImages - 1;
-                    updateGallery();
-                });
-                
-                nextBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex < totalImages - 1) ? currentIndex + 1 : 0;
-                    updateGallery();
-                });
-                
-                function updateGallery() {
-                    const translateX = -currentIndex * (100 / totalImages);
-                    track.style.transform = `translateX(${translateX}%)`;
-                }
-                
-                updateGallery();
-            });
-        }
-
-        // Lightbox para imágenes
-        function initLightbox() {
-            // Crear el lightbox
-            const lightbox = document.createElement('div');
-            lightbox.className = 'lightbox';
-            lightbox.innerHTML = `
-                <button class="lightbox-close">&times;</button>
-                <button class="lightbox-nav lightbox-prev">&#10094;</button>
-                <img class="lightbox-content">
-                <button class="lightbox-nav lightbox-next">&#10095;</button>
-            `;
-            document.body.appendChild(lightbox);
-            
-            let currentLightboxIndex = 0;
-            let currentLightboxImages = [];
-            
-            // Abrir lightbox al hacer clic en una imagen
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('gallery-image')) {
-                    const gallery = e.target.closest('.project-gallery');
-                    const images = Array.from(gallery.querySelectorAll('.gallery-image'));
-                    currentLightboxImages = images;
-                    currentLightboxIndex = images.indexOf(e.target);
-                    
-                    openLightbox();
-                }
-            });
-            
-            // Cerrar lightbox
-            lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
-            lightbox.addEventListener('click', function(e) {
-                if (e.target === lightbox) closeLightbox();
-            });
-            
-            // Navegación lightbox
-            lightbox.querySelector('.lightbox-prev').addEventListener('click', () => {
-                currentLightboxIndex = (currentLightboxIndex > 0) ? currentLightboxIndex - 1 : currentLightboxImages.length - 1;
-                updateLightbox();
-            });
-            
-            lightbox.querySelector('.lightbox-next').addEventListener('click', () => {
-                currentLightboxIndex = (currentLightboxIndex < currentLightboxImages.length - 1) ? currentLightboxIndex + 1 : 0;
-                updateLightbox();
-            });
-            
-            // Navegación con teclado
-            document.addEventListener('keydown', function(e) {
-                if (lightbox.classList.contains('active')) {
-                    if (e.key === 'Escape') closeLightbox();
-                    if (e.key === 'ArrowLeft') lightbox.querySelector('.lightbox-prev').click();
-                    if (e.key === 'ArrowRight') lightbox.querySelector('.lightbox-next').click();
-                }
-            });
-            
-            function openLightbox() {
-                updateLightbox();
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-            
-            function closeLightbox() {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-            
-            function updateLightbox() {
-                const lightboxImg = lightbox.querySelector('.lightbox-content');
-                lightboxImg.src = currentLightboxImages[currentLightboxIndex].src;
-                lightboxImg.alt = currentLightboxImages[currentLightboxIndex].alt;
-            }
-        }
-
-        // Efecto parallax para los hexágonos del fondo
-        function initParallax() {
-            document.addEventListener('scroll', function() {
-                const scrolled = window.pageYOffset;
-                const parallaxElements = document.querySelectorAll('.hexagon');
-                
-                parallaxElements.forEach(function(element, index) {
-                    const speed = 0.1 + (index * 0.05);
-                    const yPos = -(scrolled * speed);
-                    element.style.transform = `translateY(${yPos}px) rotate(${scrolled * 0.02}deg)`;
-                });
-            });
-        }
-
-        // Navegación suave
-        function initSmoothScroll() {
-            document.querySelectorAll('nav a, .cta-button').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    if (this.getAttribute('href').startsWith('#')) {
-                        e.preventDefault();
-                        
-                        const targetId = this.getAttribute('href');
-                        const targetElement = document.querySelector(targetId);
-                        
-                        if (targetElement) {
-                            window.scrollTo({
-                                top: targetElement.offsetTop - 80,
-                                behavior: 'smooth'
-                            });
-                        }
-                    }
-                });
-            });
-        }
-
-        // Integración con Web3Forms
-        function initWeb3Forms() {
-            const form = document.getElementById('quoteForm');
-            const formMessage = document.getElementById('formMessage');
-            const submitButton = document.getElementById('submitButton');
-            const originalButtonText = submitButton.textContent;
-            
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                // Cambiar el texto del botón y deshabilitarlo
-                submitButton.textContent = 'Sending...';
-                submitButton.disabled = true;
-                
-                try {
-                    const formData = new FormData(form);
-                    
-                    const response = await fetch(form.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-                    
-                    const result = await response.json();
-                    
-                    if (response.ok && result.success) {
-                        // Mostrar mensaje de éxito
-                        formMessage.textContent = 'Thank you for your message! We will get back to you soon.';
-                        formMessage.className = 'form-message success';
-                        form.reset();
-                    } else {
-                        throw new Error('Form submission failed');
-                    }
-                } catch (error) {
-                    // Mostrar mensaje de error
-                    formMessage.textContent = 'Sorry, there was an error sending your message. Please try again later.';
-                    formMessage.className = 'form-message error';
-                } finally {
-                    // Restaurar el botón
-                    submitButton.textContent = originalButtonText;
-                    submitButton.disabled = false;
-                    
-                    // Ocultar el mensaje después de 5 segundos
-                    setTimeout(() => {
-                        formMessage.style.display = 'none';
-                    }, 5000);
-                }
-            });
-        }
-    </script>
+<script src="script.js" defer></script>
 </body>
 </html>
