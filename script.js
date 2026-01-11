@@ -32,7 +32,6 @@
         }
 
         // Galerías de proyectos
-        // En tu archivo script.js, reemplaza initGalleries() con esta versión:
 function initGalleries() {
     const galleries = document.querySelectorAll('.project-gallery');
     
@@ -42,28 +41,16 @@ function initGalleries() {
         const prevBtn = gallery.querySelector('.gallery-prev');
         const nextBtn = gallery.querySelector('.gallery-next');
         
+        if (!track || !prevBtn || !nextBtn) return;
+        
         let currentIndex = 0;
         const totalImages = images.length;
         
-        // Configurar dimensiones
+        // Configurar dimensiones FIJAS para evitar CLS
         track.style.width = `${totalImages * 100}%`;
         images.forEach(img => {
             img.style.width = `${100 / totalImages}%`;
         });
-        
-        // Lazy loading para imágenes
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    if (!img.classList.contains('loaded')) {
-                        img.classList.add('loaded');
-                    }
-                }
-            });
-        });
-        
-        images.forEach(img => imageObserver.observe(img));
         
         // Navegación
         prevBtn.addEventListener('click', () => {
@@ -81,7 +68,120 @@ function initGalleries() {
             track.style.transform = `translateX(${translateX}%)`;
         }
         
+        // Touch/swipe para móviles
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        track.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        track.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const difference = touchStartX - touchEndX;
+            
+            if (Math.abs(difference) > swipeThreshold) {
+                if (difference > 0) {
+                    // Swipe izquierda = siguiente
+                    nextBtn.click();
+                } else {
+                    // Swipe derecha = anterior
+                    prevBtn.click();
+                }
+            }
+        }
+        
         updateGallery();
+    });
+}
+
+
+function optimizeImageLoading() {
+    const images = document.querySelectorAll('.gallery-image');
+    
+    images.forEach(img => {
+        const originalSrc = img.src;
+        
+        // Determinar tamaño óptimo basado en el viewport
+        const viewportWidth = window.innerWidth;
+        let optimalWidth;
+        
+        if (viewportWidth < 768) {
+            optimalWidth = 400; // Móvil
+        } else if (viewportWidth < 1024) {
+            optimalWidth = 800; // Tablet
+        } else {
+            optimalWidth = 1200; // Desktop
+        }
+        
+        // Si la imagen es muy grande, crear una versión optimizada en el momento
+        if (img.naturalWidth > optimalWidth * 1.5) {
+            // Crear un canvas para redimensionar
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            const imgElement = new Image();
+            imgElement.crossOrigin = 'anonymous';
+            imgElement.src = originalSrc;
+            
+            imgElement.onload = function() {
+                const aspectRatio = imgElement.height / imgElement.width;
+                canvas.width = optimalWidth;
+                canvas.height = optimalWidth * aspectRatio;
+                
+                ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
+                
+                // Reemplazar con imagen optimizada
+                img.src = canvas.toDataURL('image/webp', 0.8);
+                img.classList.add('optimized');
+            };
+        }
+    });
+}
+
+// ========== OPTIMIZACIÓN DE ENTREGA DE IMÁGENES ==========
+function optimizeImageDelivery() {
+    // Usar lazysizes si está disponible
+    if (window.lazySizes) {
+        window.lazySizes.init();
+    } else {
+        // Fallback: cargar imágenes cuando sean visibles
+        const images = document.querySelectorAll('.gallery-image[data-src]');
+        
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.add('lazyloaded');
+                    imageObserver.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '100px 0px', // Cargar 100px antes de que sea visible
+            threshold: 0.01
+        });
+        
+        images.forEach(img => imageObserver.observe(img));
+    }
+    
+    // Precargar imágenes importantes
+    const criticalImages = [
+        'logo.webp',
+        'docs/suPics/su1.webp'
+    ];
+    
+    criticalImages.forEach(src => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = src;
+        document.head.appendChild(link);
     });
 }
         
@@ -174,20 +274,22 @@ function initGalleries() {
 
         // Navegación suave
         function initSmoothScroll() {
-            document.querySelectorAll('nav a, .cta-button').forEach(anchor => {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
-                    if (this.getAttribute('href').startsWith('#')) {
-                        e.preventDefault();
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
                         
-                        const targetId = this.getAttribute('href');
-                        const targetElement = document.querySelector(targetId);
-                        
-                        if (targetElement) {
-                            window.scrollTo({
-                                top: targetElement.offsetTop - 80,
-                                behavior: 'smooth'
-                            });
-                        }
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
                     }
                 });
             });
@@ -195,17 +297,26 @@ function initGalleries() {
 
         // Integración con Web3Forms
         function initWeb3Forms() {
-            const form = document.getElementById('quoteForm');
-            const formMessage = document.getElementById('formMessage');
+        const form = document.getElementById('quoteForm');
+            if (!form) return;
+            
             const submitButton = document.getElementById('submitButton');
-            const originalButtonText = submitButton.textContent;
+            const formMessage = document.getElementById('formMessage');
+            const originalText = submitButton.textContent;
             
             form.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                // Cambiar el texto del botón y deshabilitarlo
+                // Validación
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+                
+                // Cambiar estado del botón
                 submitButton.textContent = 'Sending...';
                 submitButton.disabled = true;
+                submitButton.setAttribute('aria-busy', 'true');
                 
                 try {
                     const formData = new FormData(form);
@@ -221,26 +332,61 @@ function initGalleries() {
                     const result = await response.json();
                     
                     if (response.ok && result.success) {
-                        // Mostrar mensaje de éxito
-                        formMessage.textContent = 'Thank you for your message! We will get back to you soon.';
-                        formMessage.className = 'form-message success';
+                        // Éxito
+                        showMessage('Thank you! We will contact you soon.', 'success');
                         form.reset();
                     } else {
-                        throw new Error('Form submission failed');
+                        throw new Error(result.message || 'Submission failed');
                     }
                 } catch (error) {
-                    // Mostrar mensaje de error
-                    formMessage.textContent = 'Sorry, there was an error sending your message. Please try again later.';
-                    formMessage.className = 'form-message error';
+                    // Error
+                    showMessage('Error sending message. Please call us directly.', 'error');
+                    console.error('Form error:', error);
                 } finally {
-                    // Restaurar el botón
-                    submitButton.textContent = originalButtonText;
+                    // Restaurar botón
+                    submitButton.textContent = originalText;
                     submitButton.disabled = false;
-                    
-                    // Ocultar el mensaje después de 5 segundos
-                    setTimeout(() => {
-                        formMessage.style.display = 'none';
-                    }, 5000);
+                    submitButton.removeAttribute('aria-busy');
                 }
             });
+            
+            function showMessage(text, type) {
+                if (!formMessage) return;
+                
+                formMessage.textContent = text;
+                formMessage.className = `form-message ${type}`;
+                formMessage.style.display = 'block';
+                
+                setTimeout(() => {
+                    formMessage.style.display = 'none';
+                }, 5000);
+            }
         }
+        // Registrar métricas
+if ('performance' in window) {
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const timing = performance.timing;
+            const loadTime = timing.loadEventEnd - timing.navigationStart;
+            
+            console.log(`🚀 Page loaded in ${loadTime}ms`);
+            
+            // Registrar métricas Core Web Vitals
+            new PerformanceObserver((entryList) => {
+                for (const entry of entryList.getEntries()) {
+                    if (entry.entryType === 'largest-contentful-paint') {
+                        console.log(`🎨 LCP: ${Math.round(entry.startTime)}ms`);
+                    }
+                    if (entry.entryType === 'layout-shift') {
+                        if (!entry.hadRecentInput) {
+                            console.log(`📐 CLS: ${entry.value.toFixed(3)}`);
+                        }
+                    }
+                }
+            }).observe({ 
+                type: ['largest-contentful-paint', 'layout-shift'], 
+                buffered: true 
+            });
+        }, 1000);
+    });
+}

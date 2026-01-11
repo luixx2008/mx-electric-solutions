@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="MX Electric Solution - Professional electrical services in Austin, Texas. Residential, commercial, and industrial electrical installations, repairs, and maintenance. Licensed and insured.">
+    <meta name="description" content="MX Electric Solutions - Professional electrical services in Austin, Texas. Residential, commercial, and industrial electrical installations, repairs, and maintenance. Licensed and insured.">
     <meta name="keywords" content="electrician Austin, electrical services, residential electrician, commercial electrical, industrial electrical, Texas electrician">
-    <meta name="author" content="MX Electric Solution">
-    <meta property="og:title" content="MX Electric Solution - Professional Electrical Services">
+    <meta name="author" content="MX Electric Solutions">
+    <meta property="og:title" content="MX Electric Solutions - Professional Electrical Services">
     <meta property="og:description" content="Licensed and insured electrical services in Austin, Texas">
     <meta property="og:image" content="https://mxelectricsolutions.com/logo.png">
     <meta property="og:url" content="https://mxelectricsolutions.com">
-    <title>MX Electric Solution! - Professional Electrical Services</title>
+    <!-- Cache headers meta tags -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
+    <meta http-equiv="Expires" content="Wed, 21 Oct 2026 07:28:00 GMT">
+    <title>MX Electric Solutions - Professional Electrical Services</title>
     
     <!-- REDIRECCIÓN AUTOMÁTICA -->
     <script>
@@ -20,6 +23,9 @@
             window.location.href = 'https://mxelectricsolutions.com';
         }
     </script>
+    <!-- Carga diferida de lazysizes para imágenes perezosas -->
+    <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js" async></script>
+    
     
     <link rel="icon" type="image/x-icon" href="logo.webp">
     <link rel="apple-touch-icon" sizes="180x180" href="logo.webp">
@@ -27,17 +33,63 @@
     <link rel="icon" type="image/png" sizes="16x16" href="logo.webp">
 
     <!-- Precargar Font Awesome sin bloquear -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+          media="print" onload="this.media='all'" crossorigin="anonymous">
+    
     <style>
-        /* CSS CRÍTICO - Lo que se ve en la primera pantalla */
         :root { --neon-aqua: #00f3ff; --neon-green: #00ff9d; --dark-bg: #0a0a0a; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--dark-bg); color: #fff; font-family: 'Segoe UI', sans-serif; }
-        header, .hero { opacity: 0; animation: fadeIn 0.5s forwards; }
-        @keyframes fadeIn { to { opacity: 1; } }
-     </style>
+        body { background: var(--dark-bg); color: #fff; font-family: system-ui, sans-serif; overflow-x: hidden; }
+        
+        /* PREVENIR CLS - ESPACIOS RESERVADOS */
+        .gallery-container { 
+            position: relative; 
+            width: 100%; 
+            padding-top: 75%; /* 4:3 Aspect Ratio */
+            background: #1a1a1a;
+            overflow: hidden;
+        }
+        
+        .gallery-track {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            flex-shrink: 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .gallery-image.lazyloaded { opacity: 1; }
+        
+        /* HEADER FIXED PARA CLS */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10,10,10,0.95);
+            z-index: 1000;
+            height: 80px;
+        }
+        
+        .hero { 
+            min-height: 100vh; 
+            padding-top: 100px; /* Compensa el header fijo */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    </style>
 
         <!-- CSS no crítico (carga diferida) -->
         <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -54,9 +106,9 @@
     <!-- Header -->
     <header>
         <div class="logo-container">
-            <img src="logo.webp" alt="Mx Electric Solutions" class="logo-image">
+            <img src="logo.webp" alt="MX Electric Solutions" width="60" height="60" loading="eager" fetchpriority="high">
             <div class="title-container">
-                <h1>MX Electric Solution!</h1>
+                <h1>MX Electric Solutions</h1>
             </div>
         </div>
         <nav>
@@ -70,8 +122,15 @@
             </ul>
         </nav>
         <div class="contact-header">
-            <i class="fas fa-phone"></i>
-            <span><a href="tel:5125872169">(512) 587-2169</a><br><a href="tel:5124017122">(512) 401-7122</a></span>
+            <!-- BOTONES TÁCTILES DE 44px -->
+            <a href="tel:5125872169" class="phone-button" aria-label="Call (512) 587-2169">
+                <i class="fas fa-phone"></i>
+                <span>(512) 587-2169</span>
+            </a>
+            <a href="tel:5124017122" class="phone-button" aria-label="Call (512) 401-7122">
+                <i class="fas fa-phone"></i>
+                <span>(512) 401-7122</span>
+            </a>
         </div>
     </header>
     
@@ -122,9 +181,30 @@
                 <div class="project-gallery">
                     <div class="gallery-container">
                         <div class="gallery-track">
-                            <img src="docs/swPics/sw1.webp" alt="project image 1" class="gallery-image">
-                            <img src="docs/swPics/sw2.webp" alt="project image 2" class="gallery-image">
-                            <img src="docs/swPics/sw3.webp" alt="project image 3" class="gallery-image">
+                            <img 
+                                src="docs/swPics/sw1.webp"
+                                alt="subway image 1"
+                                class="lazyload gallery-image"
+                                width="645"
+                                height="857"
+                                loading="lazy"
+                            >
+                            <img 
+                                src="docs/swPics/sw2.webp"
+                                alt="subway image 2"
+                                class="lazyload gallery-image"
+                                width="645"
+                                height="857"
+                                loading="lazy"
+                            >
+                            <img 
+                                src="docs/swPics/sw3.webp"
+                                alt="subway image 3"
+                                class="lazyload gallery-image"
+                                width="645"
+                                height="857"
+                                loading="lazy"
+                            >
                         </div>
                     </div>
                     <button class="gallery-nav gallery-prev">&#10094;</button>
@@ -139,16 +219,88 @@
                 <div class="project-gallery">
                     <div class="gallery-container">
                         <div class="gallery-track">
-                            <img src="docs/remodPics/remod2.webp" alt="Project image 2" class="gallery-image">
-                            <img src="docs/remodPics/remod3.webp" alt="Project image 3" class="gallery-image">
-                            <img src="docs/remodPics/remod4.webp" alt="Project image 4" class="gallery-image">
-                            <img src="docs/remodPics/remod5.webp" alt="Project image 5" class="gallery-image">
-                            <img src="docs/remodPics/remod6.webp" alt="Project image 6" class="gallery-image">
+                            <img 
+                                src="docs/remodPics/remod2.webp"
+                                alt="remod image 2"
+                                class="lazyload gallery-image"
+                                width="645"
+                                height="857"
+                                loading="lazy"
+                            >
+                            <img 
+                                src="docs/remodPics/remod3.webp"
+                                alt="remod image 3"
+                                class="lazyload gallery-image"
+                                width="645"
+                                height="857"
+                                loading="lazy"
+                            >
+                            <img 
+                                src="docs/remodPics/remod4.webp"
+                                alt="remod image 4"
+                                class="lazyload gallery-image"
+                                width="645"
+                                height="857"
+                                loading="lazy"
+                            >
+                            <img 
+                                src="docs/remodPics/remod5.webp"
+                                alt="remod image 5"
+                                class="lazyload gallery-image"
+                                width="645"
+                                height="857"
+                                loading="lazy"
+                            >
+                            <img 
+                                src="docs/remodPics/remod6.webp"
+                                alt="remod image 6"
+                                class="lazyload gallery-image"
+                                width="645"
+                                height="857"
+                                loading="lazy"
+                            >
                             <!-- house #2-->
-                            <img src="docs/remodPics/remod7.webp" alt="proyect image 7" class="gallery-image">
-                            <img src="docs/remodPics/remod8.webp" alt="proyect image 8" class="gallery-image">
-                            <img src="docs/remodPics/remod9.webp" alt="proyect image 9" class="gallery-image">
-                            <img src="docs/remodPics/remod10.webp" alt="proyect image 10" class="gallery-image">
+                            <img 
+                                src="docs/remodPics/remod7.webp"
+                                alt="remod image 7"
+                                class="lazyload gallery-image"
+                                width="645"
+                                height="857"
+                                loading="lazy"
+                            >
+                            
+                            <img 
+                                src="docs/remodPics/remod8.webp"
+                                alt="remod image 8"
+                                class="lazyload gallery-image"
+                                width="645"
+                                height="857"
+                                loading="lazy"
+                            >
+                            <img 
+                                src="docs/remodPics/remod9.webp"
+                                alt="remod image 9"
+                                class="lazyload gallery-image"
+                                width="645"
+                                height="857"
+                                loading="lazy"
+                            >
+                            <img 
+                                src="docs/remodPics/remod9.webp"
+                                alt="remod image 9"
+                                class="lazyload gallery-image"
+                                width="645"
+                                height="857"
+                                loading="lazy"
+                            >
+                            <img 
+                                src="docs/remodPics/remod10.webp"
+                                alt="remod image 10"
+                                class="lazyload gallery-image"
+                                width="645"
+                                height="857"
+                                loading="lazy"
+                            >
                         </div>
                     </div>
                     <button class="gallery-nav gallery-prev">&#10094;</button>
@@ -163,13 +315,62 @@
                 <div class="project-gallery">
                     <div class="gallery-container">
                         <div class="gallery-track">
-                            <img src="docs/suPics/su1.webp" alt="Project image 1" class="gallery-image">
-                            <img src="docs/suPics/su2.webp" alt="Project image 2" class="gallery-image">
-                            <img src="docs/suPics/su3.webp" alt="Project image 3" class="gallery-image">
-                            <img src="docs/suPics/su4.webp" alt="Project image 4" class="gallery-image">
-                            <img src="docs/suPics/su5.webp" alt="Project image 5" class="gallery-image">
-                            <img src="docs/suPics/su6.webp" alt="Project image 6" class="gallery-image">
-                            <img src="docs/suPics/su7.webp" alt="Project image 7" class="gallery-image">
+                            <img 
+                            data src="docs/suPics/su1.webp" 
+                            alt="Sistem underground"
+                            class="lazyload gallery-image"
+                            width="645"
+                            height="857"
+                            loading="lazy"
+                            >
+                            <img 
+                            data src="docs/suPics/su1.webp" 
+                            alt="Sistem underground"
+                            class="lazyload gallery-image"
+                            width="645"
+                            height="857"
+                            loading="lazy"
+                            >
+                            <img 
+                            data src="docs/suPics/su1.webp" 
+                            alt="Sistem underground"
+                            class="lazyload gallery-image"
+                            width="645"
+                            height="857"
+                            loading="lazy"
+                            >
+                            <img 
+                            data src="docs/suPics/su1.webp" 
+                            alt="Sistem underground"
+                            class="lazyload gallery-image"
+                            width="645"
+                            height="857"
+                            loading="lazy"
+                            >
+                            <img 
+                            data src="docs/suPics/su1.webp" 
+                            alt="Sistem underground"
+                            class="lazyload gallery-image"
+                            width="645"
+                            height="857"
+                            loading="lazy"
+                            >
+                            <img 
+                            data src="docs/suPics/su1.webp" 
+                            alt="Sistem underground"
+                            class="lazyload gallery-image"
+                            width="645"
+                            height="857"
+                            loading="lazy"
+                            >
+                            <img 
+                            data src="docs/suPics/su1.webp" 
+                            alt="Sistem underground"
+                            class="lazyload gallery-image"
+                            width="645"
+                            height="857"
+                            loading="lazy"
+                            >
                         </div>
                     </div>
                     <button class="gallery-nav gallery-prev">&#10094;</button>
@@ -184,13 +385,54 @@
                 <div class="project-gallery">
                     <div class="gallery-container">
                         <div class="gallery-track">
-                            <img src="docs/gymPics/gym1.webp" alt="Project image 1" class="gallery-image">
-                            <img src="docs/gymPics/gym2.webp" alt="Project image 2" class="gallery-image">
-                            <img src="docs/gymPics/gym3.webp" alt="Project image 3" class="gallery-image">
-                            <img src="docs/gymPics/gym4.webp" alt="Project image 4" class="gallery-image">
-                            <img src="docs/gymPics/gym5.webp" alt="Project image 5" class="gallery-image">
-                            <img src="docs/gymPics/gym6.webp" alt="Project image 6" class="gallery-image">
-
+                            <img 
+                            data src="docs/gymPics/gym1.webp" 
+                            alt="GYM lights installation"
+                            class="lazyload gallery-image"
+                            width="645"
+                            height="857"
+                            loading="lazy"
+                            >
+                            <img 
+                            data src="docs/gymPics/gym2.webp" 
+                            alt="GYM lights installation"
+                            class="lazyload gallery-image"
+                            width="645"
+                            height="857"
+                            loading="lazy"
+                            >
+                            <img 
+                            data src="docs/gymPics/gym3.webp" 
+                            alt="GYM lights installation"
+                            class="lazyload gallery-image"
+                            width="645"
+                            height="857"
+                            loading="lazy"
+                            >
+                            <img 
+                            data src="docs/gymPics/gym4.webp" 
+                            alt="GYM lights installation"
+                            class="lazyload gallery-image"
+                            width="645"
+                            height="857"
+                            loading="lazy"
+                            >
+                            <img 
+                            data src="docs/gymPics/gym5.webp" 
+                            alt="GYM lights installation"
+                            class="lazyload gallery-image"
+                            width="645"
+                            height="857"
+                            loading="lazy"
+                            >
+                            <img 
+                            data src="docs/gymPics/gym6.webp" 
+                            alt="GYM lights installation"
+                            class="lazyload gallery-image"
+                            width="645"
+                            height="857"
+                            loading="lazy"
+                            >
                         </div>
                     </div>
                     <button class="gallery-nav gallery-prev">&#10094;</button>
@@ -211,7 +453,7 @@
         <div class="about-content">
             <div class="about-text">
                 <h3>Your Trusted Electrical Partner</h3>
-                <p>MX Electric Solution! has been providing premium electrical services across the United States for over 15 years. Our team of licensed electricians is committed to excellence, safety, and customer satisfaction.</p>
+                <p>MX Electric Solutions has been providing premium electrical services across the United States for over 15 years. Our team of licensed electricians is committed to excellence, safety, and customer satisfaction.</p>
                 <p>We specialize in both residential and commercial electrical projects, from simple repairs to complex installations. All our work meets or exceeds National Electrical Code standards and local regulations.</p>
                 <p>Our company is fully licensed, bonded, and insured for your protection. We offer warranties on all our work and use only high-quality materials from trusted suppliers.</p>
                 <a href="#contact" class="cta-button">Contact Us Today</a>
@@ -227,7 +469,7 @@
         <h2 class="section-title">Client Testimonials</h2>
         <div class="testimonial-grid">
             <div class="testimonial-card">
-                <p class="testimonial-text">"MX Electric Solution! completely rewired our 100-year-old home. They were professional, clean, and completed the job ahead of schedule. Highly recommended!"</p>
+                <p class="testimonial-text">"MX Electric Solutions completely rewired our 100-year-old home. They were professional, clean, and completed the job ahead of schedule. Highly recommended!"</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">JS</div>
                     <div class="author-info">
@@ -336,7 +578,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-column">
-                <h3>MX Electric Solution!</h3>
+                <h3>MX Electric Solutions</h3>
                 <p>Professional electrical services with over 15 years of experience. Licensed, bonded, and insured.</p>
                <!-- <div class="social-icons">
                     <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
@@ -374,7 +616,7 @@
         </div>
         
         <div class="copyright">
-            <p>&copy; 2023 MX Electric Solution! - All Rights Reserved | A product by Tecnologias paramo</p>
+            <p>&copy; 2023 MX Electric Solutions - All Rights Reserved | A product by Tecnologias paramo</p>
         </div>
     </footer>
 <script src="script.js" defer></script>
